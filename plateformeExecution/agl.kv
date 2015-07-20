@@ -1,5 +1,8 @@
 #:kivy 1.9.0
 
+<BottomButton@Button>
+    size_hint: .15, .15
+
 <AglLayout>:
     GridLayout:
         cols:1
@@ -15,25 +18,25 @@
                     title: root.action_bar_title
                     with_previous: False
                 ActionGroup:
-                    text: 'File'
+                    text: 'Fichier'
                     mode: 'spinner'
                     size_hint_x: None
                     width: 90
                     ActionButton:
-                        text: 'New'
+                        text: 'Nouveau'
                     ActionButton:
-                        text: 'Open'
+                        text: 'Ouvrir'
                     ActionButton:
-                        text: 'Save'
+                        text: 'Enregistrer'
                     ActionButton:
-                        text: 'Save As'
+                        text: 'Enregistrer sous'
                     ActionButton:
-                        text: 'Quit'
+                        text: 'Quitter'
                         on_press: quit()
         TabbedPanel:
             do_default_tab: False
             TabbedPanelItem:
-                text: "spécification"
+                text: "Spécification"
                 BoxLayout:
                     orientation: "horizontal"
                     Label:
@@ -43,19 +46,19 @@
                         Label:
                             text: "Vue du diagramme sélectionné"
                         BoxLayout:
-                            Button:
+                            BottomButton:
                                 text: "lancer DIA"
-                            Button:
+                            BottomButton:
                                 text: "ajouter diagramme"
             TabbedPanelItem:
-                text: "conception"
+                text: "Conception"
                 Label:
                     text: "panel de conception"
             TabbedPanelItem:
-                text: "réalisation"
+                text: "Réalisation"
                 Label:
                     text: "panel de réalisation"
             TabbedPanelItem:
-                text: "test"
+                text: "Test"
                 Label:
                     text: "panel de test"
