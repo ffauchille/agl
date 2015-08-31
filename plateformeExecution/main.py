@@ -3,12 +3,20 @@ from kivy.uix.floatlayout import FloatLayout
 import psutil
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
+from kivy.uix.textinput import TextInput
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
 
 import subprocess
 from program import Program
 
 class ProjectScreen(Screen):
-    pass
+    def __init__(self, **kwargs):
+         super(ProjectScreen, self).__init__(**kwargs)
+         self.cols = 2
+         self.add_widget(Label(text='Project Name'))
+         self.username = TextInput(multiline=False)
+         self.add_widget(self.username)
 
 class MainScreen(Screen):
     action_bar_title = "AGL"
@@ -29,7 +37,7 @@ class MainScreen(Screen):
             print "program {} started".format(self.dia_path)
 
     def spec_on_select(self):
-        print "row_selected" 
+        print "row_selected"
 
 class ScreenManagement(ScreenManager):
     pass
