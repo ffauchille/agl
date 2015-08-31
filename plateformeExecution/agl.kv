@@ -9,12 +9,18 @@ ScreenManagement:
 
 <ProjectScreen>:
     name: 'project_management'
+    GridLayout:
+        cols:1
+        rows:2
 
-    Button:
-        on_release: app.root.current = 'other'
-        text: 'Créer projet'
-        font_size: 50
-        on_press: root.init_project()
+        ActionBar:
+
+
+        Button:
+            on_release: app.root.current = 'other'
+            text: 'Créer projet'
+            font_size: 20
+            on_press: root.init_project()
 
 <MainScreen>:
     name: 'other'

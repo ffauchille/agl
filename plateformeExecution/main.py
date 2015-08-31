@@ -5,6 +5,11 @@ import psutil
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from project import Project
+from kivy.uix.textinput import TextInput
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
+
+import subprocess
 from program import Program
 
 
@@ -15,6 +20,13 @@ class ProjectScreen(Screen):
     project_name = ""
     root_path = "C:\\AGL\\Projects"
 
+    def __init__(self, **kwargs):
+         super(ProjectScreen, self).__init__(**kwargs)
+         self.cols = 2
+         self.add_widget(Label(text='Project Name'))
+         self.username = TextInput(multiline=False)
+         self.add_widget(self.username)
+
     def init_root_path(self):
         """
         Create root_path if it doesn't already exists
@@ -22,12 +34,21 @@ class ProjectScreen(Screen):
         """
         if not os.path.isdir(self.root_path):
             os.makedirs(self.root_path)
+            print "root_path's folder {} has been created".format(self.root_path)
+        else:
+            print "root_path {} exists".format(self.root_path)
 
     def init_project(self):
+        """
+        Initiate the Project's object
+        :return: void
+        """
         self.init_root_path()
+        # set parameters for Project's constructor (feel free to add more)
         kwargs = {'project_name': self.project_name,
                   'root_path': self.root_path}
         new_project = Project(**kwargs)
+
 
 
 class MainScreen(Screen):
