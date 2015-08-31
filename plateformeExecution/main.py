@@ -24,6 +24,3 @@ class AglApp(App):
     def build(self):
         self.root = AglLayout()
 
-
-if __name__ == '__main__':
-    AglApp().run()
