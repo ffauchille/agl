@@ -29,7 +29,7 @@ class MainScreen(Screen):
             print "program {} started".format(self.dia_path)
 
     def spec_on_select(self):
-        print "row_selected"
+        print "row_selected" 
 
 class ScreenManagement(ScreenManager):
     pass
