@@ -11,12 +11,13 @@ class AglLayout(FloatLayout):
 
     """
     action_bar_title = "AGL"
+    dia_path = 'C:\\Program Files (x86)\\Dia\\bin\\dia.exe'
 
     def quit(self):
         AglApp().stop()
         
     def launch_dia(self):
-        subprocess.call(['C:\\Program Files (x86)\\Dia\\bin\\dia.exe'])
+        subprocess.call([self.dia_path])
         
     def spec_on_select(self):
         print "row_selected"
