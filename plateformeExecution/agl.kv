@@ -39,8 +39,9 @@
                 text: "Spécification"
                 BoxLayout:
                     orientation: "horizontal"
-                    Label:
-                        text: "Tableau des diagrammes de cas d'utilisation"
+                    ListView:
+                        size_hint: .8,.8
+                        item_strings: ["Ligne du tableau " + str(index) for index in range(20)]
                     BoxLayout:
                         orientation: "vertical"
                         Label:
