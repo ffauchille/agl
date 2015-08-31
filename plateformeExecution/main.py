@@ -1,15 +1,9 @@
 from kivy.app import App
-from kivy.factory import Factory
 from kivy.uix.floatlayout import FloatLayout
 
 import subprocess
 
-
-
 class AglLayout(FloatLayout):
-    """
-
-    """
     action_bar_title = "AGL"
     dia_path = 'C:\\Program Files (x86)\\Dia\\bin\\dia.exe'
 
@@ -22,14 +16,7 @@ class AglLayout(FloatLayout):
     def spec_on_select(self):
         print "row_selected"
 
-    def launch_notepad(self):
-        subprocess.Popen('C:\Windows\System32\notepad.exe')
-
-
 class AglApp(App):
-    """
-
-    """
     def build(self):
         self.root = AglLayout()
 
