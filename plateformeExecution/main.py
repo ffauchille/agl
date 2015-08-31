@@ -17,7 +17,7 @@ class ProjectScreen(Screen):
     """
         First page of the agl to appear
     """
-    project_name = ""
+    project_name = "New project"
     root_path = "C:\\AGL\\Projects"
 
     def __init__(self, **kwargs):
@@ -48,7 +48,7 @@ class ProjectScreen(Screen):
         kwargs = {'project_name': self.project_name,
                   'root_path': self.root_path}
         new_project = Project(**kwargs)
-
+        new_project.create_folder()
 
 
 class MainScreen(Screen):
@@ -71,6 +71,7 @@ class MainScreen(Screen):
 
     def spec_on_select(self):
         print "row_selected" 
+
 
 class ScreenManagement(ScreenManager):
     pass
