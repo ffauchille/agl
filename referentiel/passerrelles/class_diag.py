@@ -5,7 +5,8 @@ import xml.etree.cElementTree as etree
 # Placeholder method to test the script with a dia file
 import tkFileDialog
 
-def parse_usecases():
+
+def parse_class_diag():
     file_path_string = tkFileDialog.askopenfilename()
     files = [file_path_string]
 
@@ -17,17 +18,17 @@ def parse_usecases():
     #     if not fil.endswith(".dia"):
     #         files.remove(fil)
 
-    usecases = []
+    classes = []
 
     dia = "{http://www.lysator.liu.se/~alla/dia/}"
-    path = "{0}layer/{0}object[@type='UML - Activity']/{0}attribute[@name='text']/{0}composite/{0}attribute[@name='string']/{0}string".format(dia)
+    path = "{0}layer/{0}object[@type='UML - Class']/{0}attribute[@name='name']/{0}string".format(dia)
     for fil in files:
         tree = etree.parse(fil)
-        for diag in tree.findall(path):
-            usecases.append(diag.text[1:len(diag.text)-1])
-    print usecases
-    return usecases
+        for cla in tree.findall(path):
+            classes.append(cla.text[1:len(cla.text)-1])
+    print classes
+    return classes
     # usecases contains the name of the usecase that will be given to the json
 
 if __name__ == '__main__':
-    parse_usecases()
+    parse_class_diag()
