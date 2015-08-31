@@ -1,24 +1,26 @@
 from kivy.app import App
-from kivy.uix.floatlayout import FloatLayout
+from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 
-import subprocess
+# Create both screens. Please note the root.manager.current: this is how
+# you can control the ScreenManager from kv. Each screen has by default a
+# property manager that gives you the instance of the ScreenManager used.
 
-class AglLayout(FloatLayout):
+
+# Declare both screens
+class ProjectScreen(Screen):
+    pass
+
+class MainScreen(Screen):
     action_bar_title = "AGL"
 
-    def quit(self):
-        AglApp().stop()
-        
-    def launch_dia(self):
-        subprocess.call(['C:\\Program Files (x86)\\Dia\\bin\\dia.exe'])
-        
-    def spec_on_select(self):
-        print "row_selected"
+class ScreenManagement(ScreenManager):
+    pass
 
 class AglApp(App):
-    def build(self):
-        self.root = AglLayout()
 
+    def build(self):
+        return Builder.load_file("agl.kv")
 
 if __name__ == '__main__':
     AglApp().run()
