@@ -1,14 +1,34 @@
 from kivy.app import App
+import os
 from kivy.uix.floatlayout import FloatLayout
 import psutil
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
-
-import subprocess
+from project import Project
 from program import Program
 
+
 class ProjectScreen(Screen):
-    pass
+    """
+        First page of the agl to appear
+    """
+    project_name = ""
+    root_path = "C:\\AGL\\Projects"
+
+    def init_root_path(self):
+        """
+        Create root_path if it doesn't already exists
+        :return: void
+        """
+        if not os.path.isdir(self.root_path):
+            os.makedirs(self.root_path)
+
+    def init_project(self):
+        self.init_root_path()
+        kwargs = {'project_name': self.project_name,
+                  'root_path': self.root_path}
+        new_project = Project(**kwargs)
+
 
 class MainScreen(Screen):
     action_bar_title = "AGL"
