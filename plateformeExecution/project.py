@@ -16,6 +16,7 @@ class Project(object):
     def __init__(self, **kwargs):
         self.name = kwargs.get('project_name', "New project")
         self.root_path = kwargs.get('root_path', './')
+        self.absolute_path = os.path.join(self.root_path, self.name)
 
     def create_folder(self):
         """
@@ -37,3 +38,30 @@ class Project(object):
             if not os.path.exists(cat_path):
                 os.makedirs(cat_path)
                 print "folder {} has been created".format(cat_path)
+
+    def list_dir(self, dir_path):
+        """
+        List the contend of the directory specified by dir_path
+        :param dir_path: path of the directory
+        :return: a list of filenames
+        """
+        return os.listdir(dir_path)
+
+    def get_specification_files(self):
+        """
+        List the contend of this project's specification
+        :return:
+        """
+        return self.list_dir(os.path.join(self.absolute_path, 'specification'))
+
+    def get_specification_files(self):
+        return self.list_dir(os.path.join(self.absolute_path, 'conception'))
+
+    def get_conception_files(self):
+        return self.list_dir(os.path.join(self.absolute_path, 'realisation'))
+
+    def get_test_files(self):
+        return self.list_dir(os.path.join(self.absolute_path, 'test'))
+
+    def get_referentiel_files(self):
+        return self.list_dir(os.path.join(self.absolute_path, 'referentiel'))

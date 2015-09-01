@@ -4,6 +4,7 @@ from kivy.uix.floatlayout import FloatLayout
 import psutil
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
+from plateformeExecution.singleton import Singleton
 from project import Project
 from kivy.uix.textinput import TextInput
 from kivy.uix.gridlayout import GridLayout
@@ -11,6 +12,16 @@ from kivy.uix.label import Label
 
 import subprocess
 from program import Program
+
+
+class ProjectAttributeContainer(object):
+    """
+    Class that keeps current project's attributes
+    This class is a Singleton
+    """
+    __metaclass__ = Singleton
+
+
 
 
 class ProjectScreen(Screen):
