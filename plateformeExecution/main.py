@@ -40,14 +40,14 @@ class ProjectScreen(Screen):
         else:
             print "root_path {} exists".format(self.root_path)
 
-    def init_project(self):
+    def init_project(self, value):
         """
         Initiate the Project's object
         :return: void
         """
         self.init_root_path()
         # set parameters for Project's constructor (feel free to add more)
-        kwargs = {'project_name': self.project_name,
+        kwargs = {'project_name': value,
                   'root_path': self.root_path}
         new_project = Project(**kwargs)
         new_project.create_folder()
@@ -92,6 +92,7 @@ class MainScreen(Screen):
 
     def update_list(self):
         print "updating list"
+
 
 
 class ScreenManagement(ScreenManager):

@@ -10,22 +10,29 @@ ScreenManagement:
 <ProjectScreen>:
     name: 'project_management'
 
-
     GridLayout:
         cols:1
         rows:2
 
-        TextInput:
-            id: project_name
-            text: "New project"
-            multiline: False
-            focus: True
+        GridLayout:
+            cols:2
+
+            Label:
+                text: 'Nom du projet : '
+            TextInput:
+                id: project_name
+                text: "Nouveau projet"
+                multiline: False
+                focus: True
+                padding: [50, ( self.height - self.line_height ) / 2]
+
 
         Button:
             on_release: app.root.current = 'other'
             text: 'Créer projet'
             font_size: 20
-            on_press: root.init_project()
+
+            on_press: root.init_project(project_name.text)
 
 <MainScreen>:
     name: 'other'
