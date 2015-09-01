@@ -1,5 +1,7 @@
+from kivy.adapters.listadapter import ListAdapter
 from kivy.app import App
 import os
+from kivy.uix.listview import ListItemButton
 import psutil
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
@@ -55,7 +57,7 @@ class ProjectScreen(Screen):
 class MainScreen(Screen):
     action_bar_title = "AGL"
     dia_path = 'C:\\Program Files (x86)\\Dia\\bin\\dia.exe'
-        
+
     def launch_dia(self):
         is_running = False
         for p in psutil.process_iter():
@@ -87,6 +89,9 @@ class MainScreen(Screen):
             print "specification filenames: {}".format(use_cases)
 
         return use_cases
+
+    def update_list(self):
+        print "updating list"
 
 
 class ScreenManagement(ScreenManager):
