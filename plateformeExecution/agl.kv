@@ -62,7 +62,7 @@ ScreenManagement:
                     orientation: "horizontal"
                     ListView:
                         size_hint: .8,.8
-                        item_strings: ["Ligne du tableau " + str(index) for index in range(20)]
+                        item_strings: root.get_specification_filenames()
                     BoxLayout:
                         orientation: "vertical"
                         Label:

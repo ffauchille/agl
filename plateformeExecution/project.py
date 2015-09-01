@@ -52,7 +52,9 @@ class Project(object):
         List the contend of this project's specification
         :return:
         """
-        return self.list_dir(os.path.join(self.absolute_path, 'specification'))
+        files = self.list_dir(os.path.join(self.absolute_path, 'specification'))
+        print "spec files: {}".format(files)
+        return files
 
     def get_specification_files(self):
         return self.list_dir(os.path.join(self.absolute_path, 'conception'))

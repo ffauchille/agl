@@ -14,14 +14,14 @@ import subprocess
 from program import Program
 
 
-class ProjectAttributeContainer(object):
+class AttributeContainer(object):
     """
     Class that keeps current project's attributes
     This class is a Singleton
     """
     __metaclass__ = Singleton
 
-
+    current_project = None
 
 
 class ProjectScreen(Screen):
@@ -60,12 +60,13 @@ class ProjectScreen(Screen):
                   'root_path': self.root_path}
         new_project = Project(**kwargs)
         new_project.create_folder()
+        AttributeContainer().current_project = new_project
 
 
 class MainScreen(Screen):
     action_bar_title = "AGL"
     dia_path = 'C:\\Program Files (x86)\\Dia\\bin\\dia.exe'
-        
+
     def launch_dia(self):
         is_running = False
         for p in psutil.process_iter():
@@ -81,7 +82,22 @@ class MainScreen(Screen):
             print "program {} started".format(self.dia_path)
 
     def spec_on_select(self):
-        print "row_selected" 
+        print "row_selected"
+
+    def get_specification_filenames(self):
+        """
+        list all use-cases's filenames
+        :return: a list of filenames
+        """
+        project = AttributeContainer().current_project
+        use_cases = []
+        print "project: {}".format(project)
+        if project is not None:
+            print "project is not none"
+            use_cases = project.get_specification_files()
+            print "specification filenames: {}".format(use_cases)
+
+        return use_cases
 
 
 class ScreenManagement(ScreenManager):
@@ -91,6 +107,7 @@ class ScreenManagement(ScreenManager):
 class AglApp(App):
     def build(self):
         return Builder.load_file("agl.kv")
+
 
 if __name__ == '__main__':
     AglApp().run()
