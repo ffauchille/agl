@@ -3,11 +3,12 @@ import os
 import psutil
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
-from plateformeExecution.singleton import Singleton
+from singleton import Singleton
 from project import Project
 
-import subprocess
 from program import Program
+
+from plateformeExecution.scripts.use_case import UsecaseParser
 
 
 class AttributeContainer(object):
@@ -37,6 +38,13 @@ class ProjectScreen(Screen):
             print "root_path's folder {} has been created".format(self.root_path)
         else:
             print "root_path {} exists".format(self.root_path)
+
+    # After the user click on " Creer projet "  the script use_case.py is launched.
+    def init_all(self, value):
+        self.init_project(value)
+        us = UsecaseParser()
+        UsecaseParser.parse(us, value)
+
 
     def init_project(self, value):
         """
@@ -87,7 +95,6 @@ class MainScreen(Screen):
             print "specification filenames: {}".format(use_cases)
 
         return use_cases
-
 
 
 class ScreenManagement(ScreenManager):

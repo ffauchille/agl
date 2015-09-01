@@ -2,20 +2,21 @@
 import os
 import xml.etree.cElementTree as etree
 
+
 # Placeholder method to test the script with a dia file
 import tkFileDialog
 
 
 class UsecaseParser():
 
-    def parse(self):
-        print
+    def parse(self, path_value):
+        print (path_value)
         file_path_string = tkFileDialog.askopenfilename()
         files = [file_path_string]
 
         # Get only the files to parse, could be used for the project
         # project_name = ""
-        # path = "\\AGL\\" + project_name + "\\Spec\\"
+        # path = path_value
         # files = os.listdir(path)
         # for fil in files:
         #     if not fil.endswith(".dia"):
