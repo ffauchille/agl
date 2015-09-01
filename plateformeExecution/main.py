@@ -1,17 +1,12 @@
 from kivy.app import App
 import os
-from kivy.uix.floatlayout import FloatLayout
 import psutil
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from project import Project
-from kivy.uix.textinput import TextInput
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.label import Label
 
 import subprocess
 from program import Program
-
 
 class ProjectScreen(Screen):
     """
@@ -19,13 +14,6 @@ class ProjectScreen(Screen):
     """
     project_name = "New project"
     root_path = "C:\\AGL\\Projects"
-
-    def __init__(self, **kwargs):
-         super(ProjectScreen, self).__init__(**kwargs)
-         self.cols = 2
-         self.add_widget(Label(text='Project Name'))
-         self.username = TextInput(multiline=False)
-         self.add_widget(self.username)
 
     def init_root_path(self):
         """
