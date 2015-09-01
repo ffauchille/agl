@@ -16,7 +16,10 @@ ScreenManagement:
         rows:2
 
         TextInput:
-            id: project_name 
+            id: project_name
+            text: "New project"
+            multiline: False
+            focus: True
 
         Button:
             on_release: app.root.current = 'other'
