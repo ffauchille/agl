@@ -46,4 +46,5 @@ class JavaParser():
         return json
 
 if __name__ == '__main__':
-    JavaParser.parse()
+    jp = JavaParser()
+    JavaParser.parse(jp)

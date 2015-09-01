@@ -33,4 +33,5 @@ class DiagParser():
         # usecases contains the name of the usecase that will be given to the json
 
 if __name__ == '__main__':
-    DiagParser.parse()
+    dp = DiagParser()
+    DiagParser.parse(dp)

@@ -33,4 +33,5 @@ class UsecaseParser():
         # usecases contains the name of the usecase that will be given to the json
 
 if __name__ == '__main__':
-    UsecaseParser.parse()
+    up = UsecaseParser()
+    UsecaseParser.parse(up)
