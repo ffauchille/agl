@@ -8,7 +8,7 @@ from project import Project
 
 from program import Program
 
-from referentiel.passerrelles.use_case import  UsecaseParser
+from referentiel.passerrelles.use_case import UsecaseParser
 
 
 class AttributeContainer(object):
@@ -42,9 +42,6 @@ class ProjectScreen(Screen):
     # After the user click on " Creer projet "  the script use_case.py is launched.
     def init_all(self, value):
         self.init_project(value)
-        us = UsecaseParser()
-        UsecaseParser.parse(us, value)
-
 
     def init_project(self, value):
         """
