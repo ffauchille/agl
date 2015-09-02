@@ -1,6 +1,8 @@
 from kivy.adapters.listadapter import ListAdapter
 from kivy.app import App
 import os
+from kivy.event import EventDispatcher
+from kivy.properties import ListProperty
 from kivy.uix.listview import ListItemButton
 import psutil
 from kivy.lang import Builder
@@ -59,9 +61,17 @@ class ProjectScreen(Screen):
         AttributeContainer().current_project = new_project
 
 
+class SpecificationListener(EventDispatcher):
+    """
+    Handle changes from this project's specification directory
+    """
+    specifications = ListProperty([])
+
+
 class MainScreen(Screen):
     action_bar_title = "AGL"
     dia_path = 'C:\\Program Files (x86)\\Dia\\bin\\dia.exe'
+    specs = SpecificationListener().specifications
 
     def launch_dia(self):
         is_running = False
@@ -78,25 +88,11 @@ class MainScreen(Screen):
             print "program {} started".format(self.dia_path)
 
     def spec_on_select(self):
-        print "row_selected" 
+        print "row_selected"
 
-    def get_specification_filenames(self):
-        """
-        list all use-cases's filenames
-        :return: a list of filenames
-        """
-        project = AttributeContainer().current_project
-        use_cases = []
-        print "project: {}".format(project)
-        if project is not None:
-            print "project is not none"
-            use_cases = project.get_specification_files()
-            print "specification filenames: {}".format(use_cases)
 
-        return use_cases
-
-    def update_list(self):
-        print "updating list"
+def update_specifications(instance, value):
+    print "spec changes"
 
 
 class ScreenManagement(ScreenManager):
