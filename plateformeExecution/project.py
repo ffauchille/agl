@@ -27,7 +27,6 @@ class Project(object):
             ...
         :return: void
         """
-        print "project's name: {}".format(self.name)
         project_path = os.path.join(self.root_path, self.name)
         if not os.path.exists(project_path):
             os.makedirs(project_path)

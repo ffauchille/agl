@@ -14,12 +14,10 @@ class UsecaseParser():
             if not fil.endswith(".dia"):
                 files.remove(fil)
 
-        print "test"
-        print files
         usecases = []
 
         dia = "{http://www.lysator.liu.se/~alla/dia/}"
-        path = "{0}layer/{0}object[@type='UML - Activity']/{0}attribute[@name='text']/{0}composite/{0}attribute[@name='string']/{0}string".format(dia)
+        path = "{0}layer/{0}object[@type='UML - Usecase']/{0}attribute[@name='text']/{0}composite/{0}attribute[@name='string']/{0}string".format(dia)
         for fil in files:
             print fil
             tree = etree.parse(fil)
