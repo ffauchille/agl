@@ -5,11 +5,12 @@ from kivy.uix.listview import ListItemButton
 import psutil
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
-from plateformeExecution.singleton import Singleton
+from singleton import Singleton
 from project import Project
 
-import subprocess
 from program import Program
+
+from referentiel.passerrelles.use_case import UsecaseParser
 
 
 class AttributeContainer(object):
@@ -39,6 +40,10 @@ class ProjectScreen(Screen):
             print "root_path's folder {} has been created".format(self.root_path)
         else:
             print "root_path {} exists".format(self.root_path)
+
+    # After the user click on " Creer projet "  the script use_case.py is launched.
+    def init_all(self, value):
+        self.init_project(value)
 
     def init_project(self, value):
         """
@@ -92,7 +97,6 @@ class MainScreen(Screen):
 
     def update_list(self):
         print "updating list"
-
 
 
 class ScreenManagement(ScreenManager):
