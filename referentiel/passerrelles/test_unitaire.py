@@ -5,7 +5,7 @@ import plyj.parser as plyj
 import plyj.model as m
 
 
-class JavaParser():
+class JunitParser():
 
     def parse(self):
         file_path_string = tkFileDialog.askopenfilename()
@@ -41,9 +41,24 @@ class JavaParser():
                 json = json[:-1]
                 json += "},"
             json = json[:-1]
+            if method_decl.body is not None:
+                for statement in method_decl.body:
+                    # note that this misses variables in inner blocks such as for loops
+                    # see symbols_visitor.py for a better way of handling this
+                    if type(statement) is m.VariableDeclaration:
+                        for var_decl in statement.variable_declarators:
+                            if type(statement.type) is str:
+                                type_name = statement.type
+                            else:
+                                type_name = statement.type.name.value
+                            print('        ' + type_name + ' ' + var_decl.variable.name)
+                for st in method_decl.body:
+                    print st
+                print(method_decl.body)
             print json
         return json
 
+
 if __name__ == '__main__':
-    jp = JavaParser()
-    JavaParser.parse(jp)
+    jp = JunitParser()
+    JunitParser.parse(jp)
