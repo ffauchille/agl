@@ -8,7 +8,7 @@ from project import Project
 
 from program import Program
 
-from plateformeExecution.scripts.use_case import UsecaseParser
+from referentiel.passerrelles.use_case import  UsecaseParser
 
 
 class AttributeContainer(object):

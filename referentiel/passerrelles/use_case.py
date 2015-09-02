@@ -8,8 +8,8 @@ import tkFileDialog
 
 class UsecaseParser():
 
-    def parse(self):
-        print
+    def parse(self, path_value):
+        print (path_value)
         file_path_string = tkFileDialog.askopenfilename()
         files = [file_path_string]
 
