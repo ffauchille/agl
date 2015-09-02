@@ -45,7 +45,12 @@ class Project(object):
         :param dir_path: path of the directory
         :return: a list of filenames
         """
-        return os.listdir(dir_path)
+        files = os.listdir(dir_path)
+        files2 = []
+        for fil in files:
+            fil = os.path.join(dir_path, fil)
+            files2.append(fil)
+        return files2
 
     def get_specification_files(self):
         """
@@ -56,10 +61,10 @@ class Project(object):
         print "spec files: {}".format(files)
         return files
 
-    def get_specification_files(self):
+    def get_conception_files(self):
         return self.list_dir(os.path.join(self.absolute_path, 'conception'))
 
-    def get_conception_files(self):
+    def get_realisation_files(self):
         return self.list_dir(os.path.join(self.absolute_path, 'realisation'))
 
     def get_test_files(self):
