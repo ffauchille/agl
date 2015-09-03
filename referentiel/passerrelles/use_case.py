@@ -3,6 +3,7 @@ import xml.etree.cElementTree as etree
 
 class UsecaseParser():
 
+    @classmethod
     def parse(self, path_value):
         """
         Get only the files to parse, could be used for the project

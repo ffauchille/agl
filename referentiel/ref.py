@@ -1,10 +1,13 @@
 import os
 import json
+from passerrelles.use_case import UsecaseParser
 
 class Reference(object):
     """
         Represent the reference document
     """
+
+    ref_path = ""
 
     def __init__(self, absolute_path=""):
         self.ref_path = os.path.join(absolute_path, 'referentiel', 'ref.json')
@@ -30,3 +33,10 @@ class Reference(object):
         """
         pass
 
+
+    def update_specs_json(self, specs_files):
+        """
+        :return:
+        """
+        use_cases = UsecaseParser.parse(specs_files)
+        self.insert_use_cases(use_cases)

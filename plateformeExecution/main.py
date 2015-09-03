@@ -1,5 +1,6 @@
-from kivy.app import App
 import os
+
+from kivy.app import App
 import psutil
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -7,8 +8,6 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from singleton import Singleton
 from project import Project
 from program import Program
-from ref import Reference
-from referentiel.passerrelles.use_case import UsecaseParser
 
 class AttributeContainer(object):
     """
@@ -44,12 +43,8 @@ class ProjectScreen(Screen):
         :return: void
         """
         self.init_project(project_name)
-        us = UsecaseParser()
-        project = AttributeContainer().current_project
-        use_cases = us.parse(project.get_specification_files())
+        AttributeContainer().current_project.update_specs()
 
-        ref = Reference(project.absolute_path)
-        ref.insert_use_cases(use_cases)
 
     def init_project(self, value):
         """
@@ -85,22 +80,6 @@ class MainScreen(Screen):
 
     def spec_on_select(self):
         print "row_selected" 
-
-    def get_specification_filenames(self):
-        """
-        list all use-cases's filenames
-        :return: a list of filenames
-        """
-        project = AttributeContainer().current_project
-        use_cases = []
-        print "project: {}".format(project)
-        if project is not None:
-            print "project is not none"
-            use_cases = project.get_specification_files()
-            print "specification filenames: {}".format(use_cases)
-
-        return use_cases
-
 
 class ScreenManagement(ScreenManager):
     pass
