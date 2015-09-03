@@ -6,14 +6,12 @@ from kivy.properties import ListProperty
 from kivy.uix.listview import ListItemButton
 import psutil
 from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
+from kivy.uix.screenmanager import ScreenManager, Screen
+
 from singleton import Singleton
 from project import Project
-
 from program import Program
-
 from referentiel.passerrelles.use_case import UsecaseParser
-
 
 class AttributeContainer(object):
     """
@@ -46,6 +44,9 @@ class ProjectScreen(Screen):
     # After the user click on " Creer projet "  the script use_case.py is launched.
     def init_all(self, value):
         self.init_project(value)
+        us = UsecaseParser()
+        project = AttributeContainer().current_project
+        us.parse(project.get_specification_files())
 
     def init_project(self, value):
         """
