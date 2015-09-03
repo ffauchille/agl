@@ -11,6 +11,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from singleton import Singleton
 from project import Project
 from program import Program
+from ref import Reference
 from referentiel.passerrelles.use_case import UsecaseParser
 
 class AttributeContainer(object):
@@ -41,12 +42,18 @@ class ProjectScreen(Screen):
         else:
             print "root_path {} exists".format(self.root_path)
 
-    # After the user click on " Creer projet "  the script use_case.py is launched.
-    def init_all(self, value):
-        self.init_project(value)
+    def init_all(self, project_name):
+        """
+        Function launched after the user click on "Creer projet"
+        :return: void
+        """
+        self.init_project(project_name)
         us = UsecaseParser()
         project = AttributeContainer().current_project
-        us.parse(project.get_specification_files())
+        use_cases = us.parse(project.get_specification_files())
+
+        ref = Reference(project.absolute_path)
+        ref.insert_use_cases(use_cases)
 
     def init_project(self, value):
         """

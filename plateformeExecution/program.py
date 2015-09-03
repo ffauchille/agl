@@ -1,7 +1,5 @@
-__author__ = 'flo'
 import threading
 import subprocess
-
 
 class Program(threading.Thread):
     """
