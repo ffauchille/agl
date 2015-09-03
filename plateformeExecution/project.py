@@ -1,6 +1,4 @@
-__author__ = 'flo'
 import os
-
 
 class Project(object):
     '''
