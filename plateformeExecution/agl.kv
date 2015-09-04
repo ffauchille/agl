@@ -3,6 +3,10 @@
 <BottomButton@Button>
     size_hint: .15, .15
 
+<DropDownButton@Button>
+    size_hint_y: None
+    height: 50
+
 ScreenManagement:
     ProjectScreen:
     MainScreen:
@@ -71,9 +75,7 @@ ScreenManagement:
                 text: "Spécification"
                 BoxLayout:
                     orientation: "horizontal"
-                    ListView:
-                        item_strings: root.specs
-
+                    RefTreeWidget
                     BoxLayout:
                         orientation: "vertical"
                         Label:

@@ -3,6 +3,7 @@
 # additionnal packages
 kivy
 psutil
+plyj
 
 
 Contrib :
