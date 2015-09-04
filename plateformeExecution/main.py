@@ -4,12 +4,13 @@ import os
 
 from kivy.app import App
 from kivy.event import EventDispatcher
-from kivy.properties import ListProperty, ObjectProperty
+from kivy.properties import ListProperty, ObjectProperty, DictProperty, NumericProperty
 from kivy.uix.button import Button
 from kivy.uix.dropdown import DropDown
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.listview import ListItemButton
 from kivy.uix.treeview import TreeViewLabel, TreeView
+from kivy.uix.widget import WidgetException
 import psutil
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -27,6 +28,18 @@ class AttributeContainer(object):
     __metaclass__ = Singleton
 
     current_project = None
+
+    referentiel_tree = {'node_id': '1',
+                        'children': [{'node_id': '1.1',
+                                      'children': [{'node_id': '1.1.1',
+                                                    'children': [{'node_id': '1.1.1.1',
+                                                                  'children': []}]},
+                                                   {'node_id': '1.1.2',
+                                                    'children': []},
+                                                   {'node_id': '1.1.3',
+                                                    'children': []}]},
+                                     {'node_id': '1.2',
+                                      'children': []}]}
 
 
 class ProjectScreen(Screen):
@@ -54,7 +67,6 @@ class ProjectScreen(Screen):
         """
         self.init_project(project_name)
         AttributeContainer().current_project.update_specs()
-
 
     def init_project(self, value):
         """
@@ -87,23 +99,12 @@ def populate_tree(tree_view, parent, node):
         populate_tree(tree_view, tree_node, child_node)
 
 
-referentiel_tree = {'node_id': '1',
-                    'children': [{'node_id': '1.1',
-                                  'children': [{'node_id': '1.1.1',
-                                                'children': [{'node_id': '1.1.1.1',
-                                                              'children': []}]},
-                                               {'node_id': '1.1.2',
-                                                'children': []},
-                                               {'node_id': '1.1.3',
-                                                'children': []}]},
-                                 {'node_id': '1.2',
-                                  'children': []}]}
-
-
 class MainScreen(Screen):
     action_bar_title = "AGL"
     dia_path = 'C:\\Program Files (x86)\\Dia\\bin\\dia.exe'
-        
+    # IDs in kv
+    ref_tree_widget = ObjectProperty(None)
+
     def launch_dia(self):
         is_running = False
         for p in psutil.process_iter():
@@ -122,29 +123,45 @@ class MainScreen(Screen):
         print "row_selected"
 
 
-def get_ref_tree():
-    tv = TreeView(root_options=dict(text='Root project'),
-                  hide_root=False,
-                  indent_level=5)
-
-    populate_tree(tv, None, referentiel_tree)
-    print "tree returned : {}".format(tv.get_root())
-    return tv
-
-
 class RefTreeWidget(FloatLayout):
     """
-
+        Widget for the referentiel tree view
     """
-    tree_changes = ObjectProperty(referentiel_tree)
+    tree_changes = DictProperty(AttributeContainer().referentiel_tree)
+    tree_view = TreeView()
 
     def __init__(self, **kwargs):
         super(RefTreeWidget, self).__init__(**kwargs)
-        tv = get_ref_tree()
-        self.add_widget(tv)
+        self.update_tree()
 
-    def on_tree_changes(self):
-        print "tree changed"
+    def change_ref(self):
+        self.tree_changes = dict({'node_id': 'new 1',
+                                  'children': [{'node_id': 'new 1.1',
+                                                'children': []
+                                                }]
+                                  })
+
+    def update_tree(self):
+        """
+            In order to refresh the layout, we remove the former widget
+            and add the new one.
+        """
+        try:
+            self.remove_widget(self.tree_view)
+        except WidgetException:
+            pass
+        project_name = 'New project'
+        if AttributeContainer().current_project is not None:
+            project_name = AttributeContainer().current_project.name
+        self.tree_view = TreeView(root_options=dict(text=project_name),
+                                  hide_root=False,
+                                  indent_level=5)
+        populate_tree(self.tree_view, None, self.tree_changes)
+        self.add_widget(self.tree_view)
+
+    def on_tree_changes(self, instance, value):
+        print "referentiel tree has changed"
+        self.update_tree()
 
 
 class ScreenManagement(ScreenManager):

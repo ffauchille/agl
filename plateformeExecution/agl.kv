@@ -39,6 +39,7 @@ ScreenManagement:
 
 <MainScreen>:
     name: 'other'
+    ref_tree_widget: refID
 
     GridLayout:
         cols:1
@@ -75,7 +76,12 @@ ScreenManagement:
                 text: "Spécification"
                 BoxLayout:
                     orientation: "horizontal"
-                    RefTreeWidget
+                    RefTreeWidget:
+                        id: refID
+                        BoxLayout:
+                            BottomButton:
+                                text: "[TEST] change ref"
+                                on_press: refID.change_ref()
                     BoxLayout:
                         orientation: "vertical"
                         Label:
