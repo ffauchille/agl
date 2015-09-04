@@ -5,10 +5,7 @@ import os
 from kivy.app import App
 from kivy.event import EventDispatcher
 from kivy.properties import ListProperty, ObjectProperty, DictProperty, NumericProperty
-from kivy.uix.button import Button
-from kivy.uix.dropdown import DropDown
 from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.listview import ListItemButton
 from kivy.uix.treeview import TreeViewLabel, TreeView
 from kivy.uix.widget import WidgetException
 import psutil
@@ -18,7 +15,6 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from singleton import Singleton
 from project import Project
 from program import Program
-
 
 class AttributeContainer(object):
     """
@@ -167,11 +163,9 @@ class RefTreeWidget(FloatLayout):
 class ScreenManagement(ScreenManager):
     pass
 
-
 class AglApp(App):
     def build(self):
         return Builder.load_file("agl.kv")
-
 
 if __name__ == '__main__':
     AglApp().run()

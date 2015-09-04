@@ -18,7 +18,7 @@ class Project(object):
         self.name = kwargs.get('project_name', "New project")
         self.root_path = kwargs.get('root_path', './')
         self.absolute_path = os.path.join(self.root_path, self.name)
-        self.current_ref = Reference(self.absolute_path)
+        self.current_ref = Reference(self.absolute_path, self.name)
 
     def create_folder(self):
         """
@@ -83,4 +83,5 @@ class Project(object):
         Update the specifications inside the json
         :return:
         """
-        self.current_ref.update_specs_json(self.get_specification_files())
+        #self.current_ref.update_specs_json(self.get_specification_files())
+        pass
