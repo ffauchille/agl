@@ -15,6 +15,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from singleton import Singleton
 from project import Project
 from program import Program
+from referentiel.ref import Reference
 
 class AttributeContainer(object):
     """
@@ -121,7 +122,7 @@ class MainScreen(Screen):
 
 class RefTreeWidget(FloatLayout):
     """
-        Widget for the referentiel tree view
+    Widget for the referentiel tree view
     """
     tree_changes = DictProperty(AttributeContainer().referentiel_tree)
     tree_view = TreeView()
@@ -147,8 +148,10 @@ class RefTreeWidget(FloatLayout):
         except WidgetException:
             pass
         project_name = 'New project'
+
         if AttributeContainer().current_project is not None:
             project_name = AttributeContainer().current_project.name
+
         self.tree_view = TreeView(root_options=dict(text=project_name),
                                   hide_root=False,
                                   indent_level=5)
