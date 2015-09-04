@@ -1,9 +1,12 @@
 import os
+from referentiel.ref import Reference
 
 class Project(object):
-    '''
+    """
         Represent a project
-    '''
+    """
+
+    current_ref = None
 
     categories = ['referentiel',
                   'specification',
@@ -15,6 +18,7 @@ class Project(object):
         self.name = kwargs.get('project_name', "New project")
         self.root_path = kwargs.get('root_path', './')
         self.absolute_path = os.path.join(self.root_path, self.name)
+        self.current_ref = Reference(self.absolute_path)
 
     def create_folder(self):
         """
@@ -69,3 +73,14 @@ class Project(object):
 
     def get_referentiel_files(self):
         return self.list_dir(os.path.join(self.absolute_path, 'referentiel'))
+
+    def set_referientiel(self, ref):
+        self.current_ref = ref
+
+
+    def update_specs(self):
+        """
+        Update the specifications inside the json
+        :return:
+        """
+        self.current_ref.update_specs_json(self.get_specification_files())

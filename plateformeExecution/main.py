@@ -1,6 +1,8 @@
 from kivy.adapters.listadapter import ListAdapter
 from kivy.app import App
 import os
+
+from kivy.app import App
 from kivy.event import EventDispatcher
 from kivy.properties import ListProperty, ObjectProperty
 from kivy.uix.button import Button
@@ -15,8 +17,6 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from singleton import Singleton
 from project import Project
 from program import Program
-from ref import Reference
-from referentiel.passerrelles.use_case import UsecaseParser
 
 
 class AttributeContainer(object):
@@ -53,12 +53,8 @@ class ProjectScreen(Screen):
         :return: void
         """
         self.init_project(project_name)
-        us = UsecaseParser()
-        project = AttributeContainer().current_project
-        use_cases = us.parse(project.get_specification_files())
+        AttributeContainer().current_project.update_specs()
 
-        ref = Reference(project.absolute_path)
-        ref.insert_use_cases(use_cases)
 
     def init_project(self, value):
         """
@@ -107,8 +103,7 @@ referentiel_tree = {'node_id': '1',
 class MainScreen(Screen):
     action_bar_title = "AGL"
     dia_path = 'C:\\Program Files (x86)\\Dia\\bin\\dia.exe'
-    specs = SpecificationListener().specifications
-
+        
     def launch_dia(self):
         is_running = False
         for p in psutil.process_iter():
