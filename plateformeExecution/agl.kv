@@ -30,7 +30,6 @@ ScreenManagement:
                 focus: True
                 padding: [50, ( self.height - self.line_height ) / 2]
 
-
         Button:
             on_release: app.root.current = 'other'
             text: 'Créer projet'
@@ -82,11 +81,6 @@ ScreenManagement:
                             BottomButton:
                                 text: "[TEST] change ref"
                                 on_press: refID.change_ref()
-                    BoxLayout:
-                        orientation: "vertical"
-                        Label:
-                            text: "Vue du diagramme sélectionné"
-                        BoxLayout:
                             BottomButton:
                                 text: "lancer DIA"
                                 on_press: root.launch_dia()
