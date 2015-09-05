@@ -4,12 +4,12 @@ import os
 
 from kivy.app import App
 from kivy.event import EventDispatcher
+from kivy.properties import ListProperty, ObjectProperty, DictProperty, NumericProperty
 from kivy.properties import ListProperty, ObjectProperty, DictProperty, NumericProperty, StringProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.dropdown import DropDown
 from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.listview import ListItemButton
 from kivy.uix.treeview import TreeViewLabel, TreeView
 from kivy.uix.widget import WidgetException
 import psutil
@@ -19,6 +19,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from singleton import Singleton
 from project import Project
 from program import Program
+from referentiel.ref import Reference
 
 
 class AttributeContainer(object):
@@ -104,7 +105,6 @@ class MainScreen(Screen):
     dia_path = 'C:\\Program Files (x86)\\Dia\\bin\\dia.exe'
     # IDs in kv
     ref_tree_widget = ObjectProperty(None)
-    ref_preview_widget = ObjectProperty(None)
 
     def launch_dia(self):
         is_running = False
@@ -123,7 +123,7 @@ class MainScreen(Screen):
 
 class RefTreeWidget(FloatLayout):
     """
-        Widget for the referentiel tree view
+    Widget for the referentiel tree view
     """
     # Properties attributes
     tree_changes = DictProperty(AttributeContainer().referentiel_tree)
@@ -155,8 +155,10 @@ class RefTreeWidget(FloatLayout):
         except WidgetException:
             pass
         project_name = 'New project'
+
         if AttributeContainer().current_project is not None:
             project_name = AttributeContainer().current_project.name
+
         self.tree_view = TreeView(root_options=dict(text=project_name),
                                   hide_root=False,
                                   indent_level=5)
