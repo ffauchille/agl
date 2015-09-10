@@ -8,7 +8,7 @@ class Reference(object):
         Represent the reference document
     """
 
-    referentiel_tree = TreeView()
+    referentiel_tree = TreeView
 
     ref_path = ""
     project_name = ""
@@ -28,8 +28,7 @@ class Reference(object):
         :return: void
         """
         ref = open(self.ref_path, 'a+')
-        json.dump({"Use-case": "None"}, ref, sort_keys=True, indent=4, separators=(',', ': '))
-        self.referentiel_tree.add_node({"Use-case": "None"})
+        json.dump({"name" : self.project_name, "children" : []}, ref, sort_keys=True, indent=4, separators=(',', ': '))
         ref.close()
 
     def insert_use_cases(self, uc_list):
@@ -52,7 +51,7 @@ class Reference(object):
         Load the ref.json on memory to make the print easier and improve the program speed
         :return:
         """
-        self.referentiel_tree = TreeView()
+        self.referentiel_tree = TreeView(hide_root=True)
         ref = open(self.ref_path, 'r')
         data = json.load(ref)
         ref.close()
