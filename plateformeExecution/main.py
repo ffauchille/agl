@@ -3,14 +3,9 @@ from kivy.app import App
 import os
 
 from kivy.app import App
-from kivy.event import EventDispatcher
-from kivy.properties import ListProperty, ObjectProperty, DictProperty, NumericProperty
-from kivy.properties import ListProperty, ObjectProperty, DictProperty, NumericProperty, StringProperty
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from kivy.uix.dropdown import DropDown
+from kivy.properties import ObjectProperty, DictProperty
 from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.treeview import TreeViewLabel, TreeView
+from kivy.uix.treeview import TreeView
 from kivy.uix.widget import WidgetException
 import psutil
 from kivy.lang import Builder
@@ -19,7 +14,6 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from singleton import Singleton
 from project import Project
 from program import Program
-from referentiel.ref import Reference
 
 
 class AttributeContainer(object):
@@ -89,17 +83,6 @@ class TreeHandler(object):
         Stack of methods for operations on tree
     """
 
-    @classmethod
-    def populate_tree(cls, tree_view, parent, node):
-        if parent is None:
-            tree_node = tree_view.add_node(TreeViewLabel(text=node['node_id'], is_open=True))
-        else:
-            tree_node = tree_view.add_node(TreeViewLabel(text=node['node_id'], is_open=True), parent)
-
-        for child_node in node['children']:
-            TreeHandler.populate_tree(tree_view, tree_node, child_node)
-
-
 class MainScreen(Screen):
     action_bar_title = "AGL"
     dia_path = 'C:\\Program Files (x86)\\Dia\\bin\\dia.exe'
@@ -157,13 +140,11 @@ class RefTreeWidget(FloatLayout):
         project_name = 'New project'
 
         if AttributeContainer().current_project is not None:
-            project_name = AttributeContainer().current_project.name
+            project = AttributeContainer().current_project
+            if AttributeContainer().current_project.current_ref is not None:
+                ref = project.get_ref()
+                self.add_widget(ref.get_tree())
 
-        self.tree_view = TreeView(root_options=dict(text=project_name),
-                                  hide_root=False,
-                                  indent_level=5)
-        TreeHandler.populate_tree(self.tree_view, None, self.tree_changes)
-        self.add_widget(self.tree_view)
 
     def on_tree_changes(self, instance, value):
         """

@@ -85,3 +85,6 @@ class Project(object):
         """
         #self.current_ref.update_specs_json(self.get_specification_files())
         pass
+
+    def get_ref(self):
+        return self.current_ref

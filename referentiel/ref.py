@@ -16,7 +16,7 @@ class Reference(object):
     def __init__(self, absolute_path="", project_name="New project"):
         self.ref_path = os.path.join(absolute_path, 'referentiel', project_name + '.ref.json')
         self.project_name = project_name
-        self.referentiel_tree = TreeView()
+        self.referentiel_tree = TreeView(hide_root=True)
         if os.path.isfile(self.ref_path):
             self.load_json()
         else:
@@ -56,7 +56,8 @@ class Reference(object):
         data = json.load(ref)
         ref.close()
         print data
-
+        Reference.populate_tree(self.referentiel_tree, None, data)
+        #self.referentiel_tree.add_node(TreeViewLabel(text='My second item'), parent)
 
     def update_specs_json(self, specs_files):
         """
@@ -67,3 +68,13 @@ class Reference(object):
 
     def get_tree(self):
         return self.referentiel_tree
+
+    @classmethod
+    def populate_tree(cls, tree_view, parent, node):
+        if parent is None:
+            tree_node = tree_view.add_node(TreeViewLabel(text=node['name'], is_open=True))
+        else:
+            tree_node = tree_view.add_node(TreeViewLabel(text=node['name'], is_open=True), parent)
+
+        for child_node in node['children']:
+            Reference.populate_tree(tree_view, tree_node, child_node)
