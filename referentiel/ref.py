@@ -52,12 +52,13 @@ class Reference(object):
         Load the ref.json on memory to make the print easier and improve the program speed
         :return:
         """
+        self.referentiel_tree = TreeView()
         ref = open(self.ref_path, 'r')
         data = json.load(ref)
         ref.close()
-        print data
         Reference.populate_tree(self.referentiel_tree, None, data)
-        #self.referentiel_tree.add_node(TreeViewLabel(text='My second item'), parent)
+        return self.referentiel_tree
+
 
     def update_specs_json(self, specs_files):
         """

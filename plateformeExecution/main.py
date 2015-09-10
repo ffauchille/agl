@@ -108,25 +108,11 @@ class RefTreeWidget(FloatLayout):
     """
     Widget for the referentiel tree view
     """
-    # Properties attributes
-    tree_changes = DictProperty(AttributeContainer().referentiel_tree)
-    # Regular attributes
-    tree_view = TreeView()
 
     def __init__(self, **kwargs):
         super(RefTreeWidget, self).__init__(**kwargs)
         self.update_tree()
 
-    def change_ref(self):
-        """
-        [TEST] stub for changing the referentiel dict
-        :return:
-        """
-        self.tree_changes = dict({'node_id': 'new 1',
-                                  'children': [{'node_id': 'new 1.1',
-                                                'children': []
-                                                }]
-                                  })
 
     def update_tree(self):
         """
@@ -134,7 +120,11 @@ class RefTreeWidget(FloatLayout):
             and add the new one.
         """
         try:
-            self.remove_widget(self.tree_view)
+            if AttributeContainer().current_project is not None:
+                project = AttributeContainer().current_project
+                if AttributeContainer().current_project.current_ref is not None:
+                    ref = project.get_ref()
+                    self.remove_widget(ref.get_tree())
         except WidgetException:
             pass
         project_name = 'New project'
@@ -143,18 +133,7 @@ class RefTreeWidget(FloatLayout):
             project = AttributeContainer().current_project
             if AttributeContainer().current_project.current_ref is not None:
                 ref = project.get_ref()
-                self.add_widget(ref.get_tree())
-
-
-    def on_tree_changes(self, instance, value):
-        """
-        Trigger when self.tree_changes has changed
-        :param instance:
-        :param value:
-        :return: void
-        """
-        print "referentiel tree has changed"
-        self.update_tree()
+                self.add_widget(ref.load_json())
 
 
 class ScreenManagement(ScreenManager):
