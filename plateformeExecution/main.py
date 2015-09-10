@@ -119,6 +119,7 @@ class RefTreeWidget(FloatLayout):
             In order to refresh the layout, we remove the former widget
             and add the new one.
         """
+
         try:
             if AttributeContainer().current_project is not None:
                 project = AttributeContainer().current_project
@@ -134,6 +135,7 @@ class RefTreeWidget(FloatLayout):
             if AttributeContainer().current_project.current_ref is not None:
                 ref = project.get_ref()
                 self.add_widget(ref.load_json())
+
 
 
 class ScreenManagement(ScreenManager):
