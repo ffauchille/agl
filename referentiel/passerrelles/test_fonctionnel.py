@@ -2,7 +2,6 @@
 
 import tkFileDialog
 import plyj.parser as plyj
-import plyj.model as m
 
 
 class JavaParser():
