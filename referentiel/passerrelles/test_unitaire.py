@@ -11,7 +11,7 @@ class JunitParser():
         file_path_string = tkFileDialog.askopenfilename()
         files = [file_path_string]
 
-        json = [[]]
+        json = []
         data = []
         for fil in files:
             parser = plyj.Parser()
