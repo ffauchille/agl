@@ -1,6 +1,6 @@
 import os
 import json
-from passerrelles.use_case import UsecaseParser
+from passerelles.use_case import UsecaseParser
 from kivy.uix.treeview import TreeViewLabel, TreeView
 
 class Reference(object):
@@ -37,14 +37,17 @@ class Reference(object):
         :param uc_list: list of use_case which have to insert into the file
         :return: void
         """
-        ref = open(self.ref_path, 'a+')
+        ref = open(self.ref_path, 'r')
+        data = json.load(ref)
+        ref.close()
+        print data
 
         for uc in uc_list:
-            json.dump({"Use-case": uc}, ref, sort_keys=True, indent=4, separators=(',', ': '))
+            pass
 
-            ref.write('\n\n')
+            #ref.write('\n\n')
 
-        ref.close()
+        #ref.close()
 
     def load_json(self):
         """

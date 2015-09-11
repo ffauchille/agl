@@ -1,13 +1,10 @@
-from kivy.adapters.listadapter import ListAdapter
-from kivy.app import App
 import os
+import psutil
 
 from kivy.app import App
-from kivy.properties import ObjectProperty, DictProperty
+from kivy.properties import ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.treeview import TreeView
 from kivy.uix.widget import WidgetException
-import psutil
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 
@@ -24,23 +21,11 @@ class AttributeContainer(object):
     __metaclass__ = Singleton
 
     current_project = None
-    # TEST : stub of the referentiel tree
-    referentiel_tree = {'node_id': '1',
-                        'children': [{'node_id': '1.1',
-                                      'children': [{'node_id': '1.1.1',
-                                                    'children': [{'node_id': '1.1.1.1',
-                                                                  'children': []}]},
-                                                   {'node_id': '1.1.2',
-                                                    'children': []},
-                                                   {'node_id': '1.1.3',
-                                                    'children': []}]},
-                                     {'node_id': '1.2',
-                                      'children': []}]}
 
 
 class ProjectScreen(Screen):
     """
-        First page of the agl to appear
+    First page of the agl to appear
     """
     project_name = "New project"
     root_path = "C:\\AGL\\Projects"
@@ -62,7 +47,6 @@ class ProjectScreen(Screen):
         :return: void
         """
         self.init_project(project_name)
-        AttributeContainer().current_project.update_specs()
 
     def init_project(self, value):
         """
@@ -77,11 +61,6 @@ class ProjectScreen(Screen):
         new_project.create_folder()
         AttributeContainer().current_project = new_project
 
-
-class TreeHandler(object):
-    """
-        Stack of methods for operations on tree
-    """
 
 class MainScreen(Screen):
     action_bar_title = "AGL"
@@ -111,24 +90,26 @@ class RefTreeWidget(FloatLayout):
 
     def __init__(self, **kwargs):
         super(RefTreeWidget, self).__init__(**kwargs)
-        self.update_tree()
 
 
-    def update_tree(self):
+    def update_specs(self):
         """
-            In order to refresh the layout, we remove the former widget
-            and add the new one.
+        In order to refresh the layout, we remove the former widget
+        and add a new one.
+        We also parse all .dia files in other to get all new elements the user created
+        :return: void
         """
-
         try:
             if AttributeContainer().current_project is not None:
                 project = AttributeContainer().current_project
+
+                project.get_specification_files()
+
                 if AttributeContainer().current_project.current_ref is not None:
                     ref = project.get_ref()
                     self.remove_widget(ref.get_tree())
         except WidgetException:
             pass
-        project_name = 'New project'
 
         if AttributeContainer().current_project is not None:
             project = AttributeContainer().current_project
@@ -137,15 +118,12 @@ class RefTreeWidget(FloatLayout):
                 self.add_widget(ref.load_json())
 
 
-
 class ScreenManagement(ScreenManager):
     pass
-
 
 class AglApp(App):
     def build(self):
         return Builder.load_file("agl.kv")
-
 
 if __name__ == '__main__':
     AglApp().run()
