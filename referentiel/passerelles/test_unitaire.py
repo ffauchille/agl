@@ -7,9 +7,16 @@ import plyj.model as m
 
 class JunitParser():
 
-    def parse(self):
-        file_path_string = tkFileDialog.askopenfilename()
-        files = [file_path_string]
+    def parse(self, path_value):
+
+        if path_value == "":
+            file_path_string = tkFileDialog.askopenfilename()
+            files = [file_path_string]
+        else:
+            files = path_value
+            for fil in files:
+                if not fil.endswith(".java"):
+                    files.remove(fil)
 
         json = []
         data = []
@@ -49,4 +56,4 @@ class JunitParser():
 
 if __name__ == '__main__':
     jp = JunitParser()
-    JunitParser.parse(jp)
+    JunitParser.parse(jp,"")
