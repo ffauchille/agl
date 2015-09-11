@@ -92,7 +92,7 @@ class RefTreeWidget(FloatLayout):
         super(RefTreeWidget, self).__init__(**kwargs)
 
 
-    def update_specs(self):
+    def update_tree(self):
         """
         In order to refresh the layout, we remove the former widget
         and add a new one.
@@ -102,8 +102,6 @@ class RefTreeWidget(FloatLayout):
         try:
             if AttributeContainer().current_project is not None:
                 project = AttributeContainer().current_project
-
-                project.get_specification_files()
 
                 if AttributeContainer().current_project.current_ref is not None:
                     ref = project.get_ref()
@@ -116,6 +114,12 @@ class RefTreeWidget(FloatLayout):
             if AttributeContainer().current_project.current_ref is not None:
                 ref = project.get_ref()
                 self.add_widget(ref.load_json())
+
+    def update_specs(self):
+        if AttributeContainer().current_project is not None:
+            project = AttributeContainer().current_project
+            project.update_specifications()
+            self.update_tree()
 
 
 class ScreenManagement(ScreenManager):
