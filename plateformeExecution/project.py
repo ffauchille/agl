@@ -87,7 +87,7 @@ class Project(object):
         if self.get_specification_files() == []:
             print "The specification files are empty, you cannot go further"
         else:
-            self.current_ref.update_specs_json(UsecaseParser.parse(self.get_specification_files()))
+            self.current_ref.insert_use_cases(UsecaseParser.parse(self.get_specification_files()))
 
     def get_ref(self):
         return self.current_ref

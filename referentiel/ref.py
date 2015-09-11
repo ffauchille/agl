@@ -40,14 +40,15 @@ class Reference(object):
         ref = open(self.ref_path, 'r')
         data = json.load(ref)
         ref.close()
-        print data
 
         for uc in uc_list:
-            pass
+            data['children'].append({'name' : uc, 'type' : 'Use-case', 'children' : []})
 
-            #ref.write('\n\n')
+        ref = open(self.ref_path, 'w')
+        print data
+        json.dump(data, ref, sort_keys=True, indent=4, separators=(',', ': '))
+        ref.close()
 
-        #ref.close()
 
     def load_json(self):
         """
@@ -61,13 +62,6 @@ class Reference(object):
         Reference.populate_tree(self.referentiel_tree, None, data)
         return self.referentiel_tree
 
-
-    def update_specs_json(self, specs_files):
-        """
-        :return:
-        """
-        use_cases = UsecaseParser.parse(specs_files)
-        self.insert_use_cases(use_cases)
 
     def get_tree(self):
         return self.referentiel_tree
