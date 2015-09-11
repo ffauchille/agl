@@ -154,7 +154,7 @@ class RefTreeWidget(FloatLayout):
             self.remove_widget(self.tree_view)
         except WidgetException:
             pass
-        project_name = 'New project'
+        project_name = 'Nouveau projet'
 
         if AttributeContainer().current_project is not None:
             project_name = AttributeContainer().current_project.name
