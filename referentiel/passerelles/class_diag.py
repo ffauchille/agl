@@ -9,6 +9,10 @@ import tkFileDialog
 class DiagParser():
 
     def parse(self):
+        """
+
+        :return: List of diagram names
+        """
         file_path_string = tkFileDialog.askopenfilename()
         files = [file_path_string]
 

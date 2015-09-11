@@ -57,6 +57,7 @@ ScreenManagement:
                 ActionButton:
                     text: 'Quitter'
                     on_press: quit()
+
         TabbedPanel:
             do_default_tab: False
             TabbedPanelItem:
@@ -75,8 +76,16 @@ ScreenManagement:
 
             TabbedPanelItem:
                 text: "Conception"
-                Label:
-                    text: "panel de conception"
+                BoxLayout:
+                    orientation: "horizontal"
+                    BoxLayout:
+                        BottomButton:
+                            text: "lancer DIA"
+                            on_press: root.launch_dia()
+                        BottomButton:
+                            text: "Parse conceptions"
+                            on_press: refID.update_specs()
+
             TabbedPanelItem:
                 text: "Réalisation"
                 Label:

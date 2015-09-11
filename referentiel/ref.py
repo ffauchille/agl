@@ -42,7 +42,10 @@ class Reference(object):
         ref.close()
 
         for uc in uc_list:
-            data['children'].append({'name' : uc, 'type' : 'Use-case', 'children' : []})
+            if not any(d['name'] == uc for d in data['children']):
+                data['children'].append({'name' : uc, 'type' : 'Use-case', 'children' : []})
+            else:
+                pass
 
         ref = open(self.ref_path, 'w')
         print data
