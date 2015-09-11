@@ -40,6 +40,7 @@ ScreenManagement:
     name: 'other'
     ref_tree_widget: refID
 
+    on_enter: refID.update_tree()
     GridLayout:
         cols:1
         rows:2
@@ -53,22 +54,9 @@ ScreenManagement:
                 ActionPrevious:
                     title: root.action_bar_title
                     with_previous: False
-                ActionGroup:
-                    text: 'Fichier'
-                    mode: 'spinner'
-                    size_hint_x: None
-                    width: 90
-                    ActionButton:
-                        text: 'Nouveau'
-                    ActionButton:
-                        text: 'Ouvrir'
-                    ActionButton:
-                        text: 'Enregistrer'
-                    ActionButton:
-                        text: 'Enregistrer sous'
-                    ActionButton:
-                        text: 'Quitter'
-                        on_press: quit()
+                ActionButton:
+                    text: 'Quitter'
+                    on_press: quit()
         TabbedPanel:
             do_default_tab: False
             TabbedPanelItem:
@@ -79,13 +67,11 @@ ScreenManagement:
                         id: refID
                         BoxLayout:
                             BottomButton:
-                                text: "[TEST] change ref"
-                                on_press: refID.change_ref()
-                            BottomButton:
                                 text: "lancer DIA"
                                 on_press: root.launch_dia()
                             BottomButton:
-                                text: "ajouter diagramme"
+                                text: "Parse specifications"
+                                on_press: refID.update_specs()
 
             TabbedPanelItem:
                 text: "Conception"

@@ -1,5 +1,6 @@
 import os
 from referentiel.ref import Reference
+from referentiel.passerelles.use_case import UsecaseParser
 
 class Project(object):
     """
@@ -78,10 +79,15 @@ class Project(object):
         self.current_ref = ref
 
 
-    def update_specs(self):
+    def update_specifications(self):
         """
         Update the specifications inside the json
         :return:
         """
-        #self.current_ref.update_specs_json(self.get_specification_files())
-        pass
+        if self.get_specification_files() == []:
+            print "The specification files are empty, you cannot go further"
+        else:
+            self.current_ref.insert_use_cases(UsecaseParser.parse(self.get_specification_files()))
+
+    def get_ref(self):
+        return self.current_ref
