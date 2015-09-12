@@ -1,25 +1,18 @@
-from kivy.adapters.listadapter import ListAdapter
-from kivy.app import App
 import os
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.treeview import TreeViewLabel, TreeView
+import psutil
 
 from kivy.app import App
-from kivy.event import EventDispatcher
-from kivy.properties import ListProperty, ObjectProperty, DictProperty, NumericProperty
-from kivy.properties import ListProperty, ObjectProperty, DictProperty, NumericProperty, StringProperty
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from kivy.uix.dropdown import DropDown
+from kivy.properties import ObjectProperty, DictProperty, Clock
 from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.treeview import TreeViewLabel, TreeView
 from kivy.uix.widget import WidgetException
-import psutil
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 from singleton import Singleton
 from project import Project
 from program import Program
-from referentiel.ref import Reference
 
 
 class AttributeContainer(object):
@@ -30,23 +23,11 @@ class AttributeContainer(object):
     __metaclass__ = Singleton
 
     current_project = None
-    # TEST : stub of the referentiel tree
-    referentiel_tree = {'node_id': '1',
-                        'children': [{'node_id': '1.1',
-                                      'children': [{'node_id': '1.1.1',
-                                                    'children': [{'node_id': '1.1.1.1',
-                                                                  'children': []}]},
-                                                   {'node_id': '1.1.2',
-                                                    'children': []},
-                                                   {'node_id': '1.1.3',
-                                                    'children': []}]},
-                                     {'node_id': '1.2',
-                                      'children': []}]}
 
 
 class ProjectScreen(Screen):
     """
-        First page of the agl to appear
+    First page of the agl to appear
     """
     project_name = "New project"
     root_path = "C:\\AGL\\Projects"
@@ -68,7 +49,6 @@ class ProjectScreen(Screen):
         :return: void
         """
         self.init_project(project_name)
-        AttributeContainer().current_project.update_specs()
 
     def init_project(self, value):
         """
@@ -82,22 +62,6 @@ class ProjectScreen(Screen):
         new_project = Project(**kwargs)
         new_project.create_folder()
         AttributeContainer().current_project = new_project
-
-
-class TreeHandler(object):
-    """
-        Stack of methods for operations on tree
-    """
-
-    @classmethod
-    def populate_tree(cls, tree_view, parent, node):
-        if parent is None:
-            tree_node = tree_view.add_node(TreeViewLabel(text=node['node_id'], is_open=True))
-        else:
-            tree_node = tree_view.add_node(TreeViewLabel(text=node['node_id'], is_open=True), parent)
-
-        for child_node in node['children']:
-            TreeHandler.populate_tree(tree_view, tree_node, child_node)
 
 
 class MainScreen(Screen):
@@ -126,54 +90,50 @@ class RefTreeWidget(FloatLayout):
     Widget for the referentiel tree view
     """
     # Properties attributes
-    tree_changes = DictProperty(AttributeContainer().referentiel_tree)
+    tree_changes = DictProperty({})
     # Regular attributes
     tree_view = TreeView()
 
     def __init__(self, **kwargs):
         super(RefTreeWidget, self).__init__(**kwargs)
-        self.update_tree()
-
-    def change_ref(self):
-        """
-        [TEST] stub for changing the referentiel dict
-        :return:
-        """
-        self.tree_changes = dict({'node_id': 'new 1',
-                                  'children': [{'node_id': 'new 1.1',
-                                                'children': []
-                                                }]
-                                  })
+        # update_tree will be call each second (1 times per second)
+        Clock.schedule_interval(self.update_ref, 1 / 1.)
 
     def update_tree(self):
         """
-            In order to refresh the layout, we remove the former widget
-            and add the new one.
+        In order to refresh the layout, we remove the former widget
+        and add a new one.
+        We also parse all .dia files in other to get all new elements the user created
+        :return: void
         """
         try:
             self.remove_widget(self.tree_view)
         except WidgetException:
             pass
-        project_name = 'Nouveau projet'
 
         if AttributeContainer().current_project is not None:
-            project_name = AttributeContainer().current_project.name
+            project = AttributeContainer().current_project
+            if AttributeContainer().current_project.current_ref is not None:
+                ref = project.get_ref()
+                self.tree_view = ref.referentiel_tree
+                try:
+                    # we remove the referentiel TreeView Widget for *this* FloatLayout
+                    self.add_widget(self.tree_view)
+                except WidgetException:
+                    pass
 
-        self.tree_view = TreeView(root_options=dict(text=project_name),
-                                  hide_root=False,
-                                  indent_level=5)
-        TreeHandler.populate_tree(self.tree_view, None, self.tree_changes)
-        self.add_widget(self.tree_view)
+    def update_ref(self, dt = None):
+        """
+        NOTE: This method is called every seconds.
 
-    def on_tree_changes(self, instance, value):
+        :param dt: delta time required for the Clock.schedule_interval
+        :return:
         """
-        Trigger when self.tree_changes has changed
-        :param instance:
-        :param value:
-        :return: void
-        """
-        print "referentiel tree has changed"
-        self.update_tree()
+        if AttributeContainer().current_project is not None:
+            project = AttributeContainer().current_project
+            project.update_specifications()
+            # TODO : Need to update all the other parts of the referentiel (conception, realisation, ...)
+            self.update_tree()
 
 
 class ScreenManagement(ScreenManager):
@@ -183,7 +143,6 @@ class ScreenManagement(ScreenManager):
 class AglApp(App):
     def build(self):
         return Builder.load_file("agl.kv")
-
 
 if __name__ == '__main__':
     AglApp().run()
