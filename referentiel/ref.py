@@ -16,7 +16,7 @@ class Reference(object):
     def __init__(self, absolute_path="", project_name="New project"):
         # self.ref_path = os.path.join(absolute_path, 'referentiel', project_name + '.ref.json')
         # STUB : example's ref.json
-        self.ref_path = os.path.join(absolute_path, 'referentiel', 'ref.json')
+        self.ref_path = os.path.join(absolute_path, 'referentiel', project_name + '.ref.json')
 
         self.project_name = project_name
         self.referentiel_tree = TreeView(hide_root=True)

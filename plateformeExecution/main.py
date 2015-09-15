@@ -1,6 +1,5 @@
 import os
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.treeview import TreeViewLabel, TreeView
+from kivy.uix.treeview import TreeView
 import psutil
 
 from kivy.app import App
@@ -13,7 +12,6 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from singleton import Singleton
 from project import Project
 from program import Program
-
 
 class AttributeContainer(object):
     """
@@ -67,6 +65,8 @@ class ProjectScreen(Screen):
 class MainScreen(Screen):
     action_bar_title = "AGL"
     dia_path = 'C:\\Program Files (x86)\\Dia\\bin\\dia.exe'
+    intellij_path = 'C:\\Program Files (x86)\\JetBrains\\IntelliJ IDEA 14.1.3\\bin\\idea.exe'
+    f2c_path =  'C:\\Program Files (x86)\\AthTek\\FlowchartToCode\\FlowchartToCode.exe'
     # IDs in kv
     ref_tree_widget = ObjectProperty(None)
 
@@ -75,7 +75,7 @@ class MainScreen(Screen):
         for p in psutil.process_iter():
             try:
                 if p.name() == 'dia.exe':
-                    print "dia is already running"
+                    print "Dia is already running"
                     is_running = True
             except psutil.error:
                 pass
@@ -84,6 +84,33 @@ class MainScreen(Screen):
             dia.start()
             print "program {} started".format(self.dia_path)
 
+    def launch_intellij(self):
+        is_running = False
+        for p in psutil.process_iter():
+            try:
+                if p.name() == 'idea.exe':
+                    print "IntelliJ IDEA is already running"
+                    is_running = True
+            except psutil.error:
+                pass
+        if not is_running:
+            intellij = Program(self.intellij_path)
+            intellij.start()
+            print "program {} started".format(self.intellij_path)
+
+    def launch_f2c(self):
+        is_running = False
+        for p in psutil.process_iter():
+            try:
+                if p.name() == 'FlowchartToCode.exe':
+                    print "Flowchart To Code is already running"
+                    is_running = True
+            except psutil.error:
+                pass
+        if not is_running:
+            f2c = Program(self.f2c_path)
+            f2c.start()
+            print "program {} started".format(self.f2c_path)
 
 class RefTreeWidget(FloatLayout):
     """
@@ -97,7 +124,7 @@ class RefTreeWidget(FloatLayout):
     def __init__(self, **kwargs):
         super(RefTreeWidget, self).__init__(**kwargs)
         # update_tree will be call each second (1 times per second)
-        Clock.schedule_interval(self.update_ref, 1 / 1.)
+        Clock.schedule_interval(self.update_ref, 1 / 0.2)
 
     def update_tree(self):
         """
@@ -109,17 +136,21 @@ class RefTreeWidget(FloatLayout):
         try:
             self.remove_widget(self.tree_view)
         except WidgetException:
+            print "Error during the tree_view remove"
             pass
 
         if AttributeContainer().current_project is not None:
             project = AttributeContainer().current_project
             if AttributeContainer().current_project.current_ref is not None:
                 ref = project.get_ref()
+                #Reload the json on the tree before adding the widget
+                ref.load_json()
                 self.tree_view = ref.referentiel_tree
                 try:
                     # we remove the referentiel TreeView Widget for *this* FloatLayout
                     self.add_widget(self.tree_view)
                 except WidgetException:
+                    print "Error during the tree_view add"
                     pass
 
     def update_ref(self, dt = None):
@@ -133,6 +164,7 @@ class RefTreeWidget(FloatLayout):
             project = AttributeContainer().current_project
             project.update_specifications()
             # TODO : Need to update all the other parts of the referentiel (conception, realisation, ...)
+
             self.update_tree()
 
 
@@ -141,6 +173,7 @@ class ScreenManagement(ScreenManager):
 
 
 class AglApp(App):
+    title = 'AGL'
     def build(self):
         return Builder.load_file("agl.kv")
 

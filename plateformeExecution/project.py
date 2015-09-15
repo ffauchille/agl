@@ -19,6 +19,7 @@ class Project(object):
         self.name = kwargs.get('project_name', "New project")
         self.root_path = kwargs.get('root_path', './')
         self.absolute_path = os.path.join(self.root_path, self.name)
+        self.create_folder()
         self.current_ref = Reference(self.absolute_path, self.name)
 
     def create_folder(self):
@@ -43,7 +44,7 @@ class Project(object):
 
     def list_dir(self, dir_path):
         """
-        List the contend of the directory specified by dir_path
+        List the content of the directory specified by dir_path
         :param dir_path: path of the directory
         :return: a list of filenames
         """
@@ -56,7 +57,7 @@ class Project(object):
 
     def get_specification_files(self):
         """
-        List the contend of this project's specification
+        List the content of this project's specification
         :return:
         """
         files = self.list_dir(os.path.join(self.absolute_path, 'specification'))

@@ -61,29 +61,32 @@ ScreenManagement:
                 BoxLayout:
                     orientation: "horizontal"
                     BottomButton:
-                        text: "lancer DIA"
+                        text: "Lancer DIA"
                         on_press: root.launch_dia()
             TabbedPanelItem:
                 text: "Conception"
                 BoxLayout:
                     orientation: "horizontal"
                     BottomButton:
-                        text: "lancer DIA"
+                        text: "Lancer DIA"
                         on_press: root.launch_dia()
+                    BottomButton:
+                        text: "Lancer Flowchart To Code"
+                        on_press: root.launch_f2c()
             TabbedPanelItem:
                 text: "Réalisation"
                 BoxLayout:
                     orientation: "horizontal"
                     BottomButton:
-                        text: "lancer Intellij Idea"
-                        on_press: root.launch_dia()
+                        text: "Lancer IntelliJ IDEA"
+                        on_press: root.launch_intellij()
             TabbedPanelItem:
                 text: "Test"
                 BoxLayout:
                     orientation: "horizontal"
                     BottomButton:
-                        text: "lancer Cucumber"
-                        on_press: root.launch_dia()
+                        text: "Lancer Cucumber"
+                        on_press: root.launch_intellij()
   
         RefTreeWidget:
             # NOTE: It's a FloatLayout
