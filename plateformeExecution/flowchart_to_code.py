@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from Tkinter import *
 import tkFileDialog
 import os
 
@@ -7,21 +8,28 @@ import os
 class FlowchartToCode():
 
     def parse(self):
-        fil = tkFileDialog.askopenfilename()
+        try:
+            root = Tk()
+            root.withdraw()
+            fil = tkFileDialog.askopenfilename()
+        except:
+            pass
         count = 0
         body = ""
-        with open(fil) as f:
-            stream = f.read()
-        for ch in stream:
-            if ch == "{":
-                count += 1
-            elif ch == "}":
-                count -= 1
-            if count > 0:
-                body += ch
-        body = body[1:]
-        array = [os.path.basename(fil), body]
-        # print array
+        array = []
+        if fil:
+            with open(fil) as f:
+                stream = f.read()
+            for ch in stream:
+                if ch == "{":
+                    count += 1
+                elif ch == "}":
+                    count -= 1
+                if count > 0:
+                    body += ch
+            body = body[1:]
+            array = [os.path.basename(fil), body]
+            # print array
         return array
 
     def implement(self, files):
