@@ -19,6 +19,7 @@ class Project(object):
         self.name = kwargs.get('project_name', "New project")
         self.root_path = kwargs.get('root_path', './')
         self.absolute_path = os.path.join(self.root_path, self.name)
+        self.create_folder()
         self.current_ref = Reference(self.absolute_path, self.name)
 
     def create_folder(self):

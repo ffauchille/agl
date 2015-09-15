@@ -1,6 +1,5 @@
 import os
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.treeview import TreeViewLabel, TreeView
+from kivy.uix.treeview import TreeView
 import psutil
 
 from kivy.app import App
@@ -97,7 +96,7 @@ class RefTreeWidget(FloatLayout):
     def __init__(self, **kwargs):
         super(RefTreeWidget, self).__init__(**kwargs)
         # update_tree will be call each second (1 times per second)
-        Clock.schedule_interval(self.update_ref, 1 / 1.)
+        Clock.schedule_interval(self.update_ref, 1 / 0.2)
 
     def update_tree(self):
         """
