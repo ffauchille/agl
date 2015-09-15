@@ -12,6 +12,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from singleton import Singleton
 from project import Project
 from program import Program
+from flowchart_to_code import FlowchartToCode
 
 class AttributeContainer(object):
     """
@@ -111,6 +112,12 @@ class MainScreen(Screen):
             f2c = Program(self.f2c_path)
             f2c.start()
             print "program {} started".format(self.f2c_path)
+
+    def launch_mergeScript(self):
+            mergeScript = FlowchartToCode()
+            project = AttributeContainer().current_project
+            mergeScript.implement(project.get_realisation_files())
+            print "program {} started".format('Merge script running...')
 
 class RefTreeWidget(FloatLayout):
     """
