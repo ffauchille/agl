@@ -73,7 +73,7 @@ class MainScreen(Screen):
         for p in psutil.process_iter():
             try:
                 if p.name() == 'dia.exe':
-                    print "dia is already running"
+                    print "Dia is already running"
                     is_running = True
             except psutil.error:
                 pass
@@ -144,6 +144,7 @@ class ScreenManagement(ScreenManager):
 
 
 class AglApp(App):
+    title = 'AGL'
     def build(self):
         return Builder.load_file("agl.kv")
 
