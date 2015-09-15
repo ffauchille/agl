@@ -13,7 +13,6 @@ from singleton import Singleton
 from project import Project
 from program import Program
 
-
 class AttributeContainer(object):
     """
     Class that keeps current project's attributes
@@ -108,17 +107,21 @@ class RefTreeWidget(FloatLayout):
         try:
             self.remove_widget(self.tree_view)
         except WidgetException:
+            print "Error during the tree_view remove"
             pass
 
         if AttributeContainer().current_project is not None:
             project = AttributeContainer().current_project
             if AttributeContainer().current_project.current_ref is not None:
                 ref = project.get_ref()
+                #Reload the json on the tree before adding the widget
+                ref.load_json()
                 self.tree_view = ref.referentiel_tree
                 try:
                     # we remove the referentiel TreeView Widget for *this* FloatLayout
                     self.add_widget(self.tree_view)
                 except WidgetException:
+                    print "Error during the tree_view add"
                     pass
 
     def update_ref(self, dt = None):
@@ -132,6 +135,7 @@ class RefTreeWidget(FloatLayout):
             project = AttributeContainer().current_project
             project.update_specifications()
             # TODO : Need to update all the other parts of the referentiel (conception, realisation, ...)
+
             self.update_tree()
 
 
