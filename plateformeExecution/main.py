@@ -66,6 +66,7 @@ class MainScreen(Screen):
     action_bar_title = "AGL"
     dia_path = 'C:\\Program Files (x86)\\Dia\\bin\\dia.exe'
     intellij_path = 'C:\\Program Files (x86)\\JetBrains\\IntelliJ IDEA 14.1.3\\bin\\idea.exe'
+    f2c_path =  'C:\\Program Files (x86)\\AthTek\\FlowchartToCode\\FlowchartToCode.exe'
     # IDs in kv
     ref_tree_widget = ObjectProperty(None)
 
@@ -97,6 +98,19 @@ class MainScreen(Screen):
             intellij.start()
             print "program {} started".format(self.intellij_path)
 
+    def launch_f2c(self):
+        is_running = False
+        for p in psutil.process_iter():
+            try:
+                if p.name() == 'FlowchartToCode.exe':
+                    print "Flowchart To Code is already running"
+                    is_running = True
+            except psutil.error:
+                pass
+        if not is_running:
+            f2c = Program(self.f2c_path)
+            f2c.start()
+            print "program {} started".format(self.f2c_path)
 
 class RefTreeWidget(FloatLayout):
     """
