@@ -130,8 +130,9 @@ class RefTreeWidget(FloatLayout):
 
     def __init__(self, **kwargs):
         super(RefTreeWidget, self).__init__(**kwargs)
-        # update_tree will be call each second (1 times per second)
-        Clock.schedule_interval(self.update_ref, 1 / 0.2)
+        # update_tree will be call each second (1 times / 0.2 per second)
+        # FIXME The line below has to be uncommented after fixing the reference duplication BUG!
+        #Clock.schedule_interval(self.update_ref, 1 / 0.2)
 
     def update_tree(self):
         """
@@ -155,6 +156,7 @@ class RefTreeWidget(FloatLayout):
                 self.tree_view = ref.referentiel_tree
                 try:
                     # we remove the referentiel TreeView Widget for *this* FloatLayout
+                    print self.tree_view
                     self.add_widget(self.tree_view)
                 except WidgetException:
                     print "Error during the tree_view add"

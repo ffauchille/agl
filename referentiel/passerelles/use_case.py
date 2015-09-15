@@ -8,7 +8,7 @@ class UsecaseParser():
         """
         Get only the files to parse, could be used for the project
         :param path_value:
-        :return:
+        :return: List of use-cases
         """
 
         files = path_value
@@ -26,8 +26,3 @@ class UsecaseParser():
                 usecases.append(diag.text[1:len(diag.text)-1])
         print usecases
         return usecases
-        # usecases contains the name of the usecase that will be given to the json
-
-if __name__ == '__main__':
-    up = UsecaseParser()
-    UsecaseParser.parse(up)

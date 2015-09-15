@@ -59,7 +59,7 @@ class Project(object):
     def get_specification_files(self):
         """
         List the content of this project's specification
-        :return:
+        :return: the files which are inside the specification folder
         """
         files = self.list_dir(os.path.join(self.absolute_path, 'specification'))
         print "spec files: {}".format(files)
@@ -86,10 +86,11 @@ class Project(object):
         Update the specifications inside the json
         :return:
         """
-        if self.get_specification_files() == []:
+        files = self.get_specification_files()
+        if files == []:
             print "The specification files are empty, you cannot go further"
         else:
-            self.current_ref.insert_use_cases(UsecaseParser.parse(self.get_specification_files()))
+            self.current_ref.insert_use_cases(UsecaseParser.parse(files))
 
     def get_ref(self):
         return self.current_ref
