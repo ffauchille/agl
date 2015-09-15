@@ -41,6 +41,7 @@ class Project(object):
             if not os.path.exists(cat_path):
                 os.makedirs(cat_path)
                 print "folder {} has been created".format(cat_path)
+        os.chdir('C:\\AGL\\Projects\\' + self.name)
 
     def list_dir(self, dir_path):
         """
