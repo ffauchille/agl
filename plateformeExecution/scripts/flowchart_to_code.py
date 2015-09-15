@@ -2,7 +2,6 @@
 
 import tkFileDialog
 import os
-from plateformeExecution.project import Project
 
 
 class FlowchartToCode():
@@ -25,8 +24,9 @@ class FlowchartToCode():
         # print array
         return array
 
-    def implement(self, files, array):
-        files = ["C:\\AGL\\Diagramme1.java"]
+    def implement(self, files):
+        # files = ["C:\\AGL\\Diagramme1.java"]
+        array = self.parse()
         for fil in files:
             body = ""
             with open(fil, "r+") as f:
@@ -46,4 +46,4 @@ class FlowchartToCode():
 
 if __name__ == '__main__':
     jp = FlowchartToCode()
-    FlowchartToCode.implement(jp, "", jp.parse())
+    FlowchartToCode.implement(jp, "")
