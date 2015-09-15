@@ -65,6 +65,7 @@ class ProjectScreen(Screen):
 class MainScreen(Screen):
     action_bar_title = "AGL"
     dia_path = 'C:\\Program Files (x86)\\Dia\\bin\\dia.exe'
+    intellij_path = 'C:\\Program Files (x86)\\JetBrains\\IntelliJ IDEA 14.1.3\\bin\\idea.exe'
     # IDs in kv
     ref_tree_widget = ObjectProperty(None)
 
@@ -81,6 +82,20 @@ class MainScreen(Screen):
             dia = Program(self.dia_path)
             dia.start()
             print "program {} started".format(self.dia_path)
+
+    def launch_intellij(self):
+        is_running = False
+        for p in psutil.process_iter():
+            try:
+                if p.name() == 'idea.exe':
+                    print "IntelliJ IDEA is already running"
+                    is_running = True
+            except psutil.error:
+                pass
+        if not is_running:
+            intellij = Program(self.intellij_path)
+            intellij.start()
+            print "program {} started".format(self.intellij_path)
 
 
 class RefTreeWidget(FloatLayout):
