@@ -4,14 +4,14 @@ import xml.etree.cElementTree as etree
 class UsecaseParser():
 
     @classmethod
-    def parse(self, path_value):
+    def parse(self, files_list):
         """
-        Get only the files to parse, could be used for the project
+        Parse all files contained in the path_value and get the use-cases of the *.dia files
         :param path_value:
         :return: List of use-cases
         """
 
-        files = path_value
+        files = files_list
         for fil in files:
             if not fil.endswith(".dia"):
                 files.remove(fil)

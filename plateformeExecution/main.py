@@ -171,7 +171,8 @@ class RefTreeWidget(FloatLayout):
         """
         if AttributeContainer().current_project is not None:
             project = AttributeContainer().current_project
-            project.update_specifications()
+            project.update_specification()
+            project.update_conception()
             # TODO : Need to update all the other parts of the referentiel (conception, realisation, ...)
 
             self.update_tree()

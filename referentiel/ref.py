@@ -37,7 +37,7 @@ class Reference(object):
     def insert_use_cases(self, uc_list):
         """
         Insert all use cases given in parameter inside the ref.json
-        :param uc_list: list of use_case which have to insert into the file
+        :param uc_list: list of use_case which have to be insert into the file
         :return: void
         """
         ref = open(self.ref_path, 'r')
@@ -55,6 +55,13 @@ class Reference(object):
         json.dump(data, ref, sort_keys=True, indent=4, separators=(',', ': '))
         ref.close()
 
+    def insert_diag_concept(self, dc_list):
+        """
+        Insert all design diagrams given in parameter inside the ref.json
+        :param uc_list: list of diagrams which have to be insert into the file
+        :return: void
+        """
+        print dc_list
 
     def load_json(self):
         """

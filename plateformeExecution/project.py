@@ -1,6 +1,7 @@
 import os
 from referentiel.ref import Reference
 from referentiel.passerelles.use_case import UsecaseParser
+from referentiel.passerelles.class_diag import DiagParser
 
 class Project(object):
     """
@@ -61,11 +62,13 @@ class Project(object):
         List the content of this project's specification
         :return: the files which are inside the specification folder
         """
-        files = self.list_dir(os.path.join(self.absolute_path, 'specification'))
-        print "spec files: {}".format(files)
-        return files
+        return self.list_dir(os.path.join(self.absolute_path, 'specification'))
 
     def get_conception_files(self):
+        """
+        List the content of this project's conception
+        :return: the files which are inside the conception folder
+        """
         return self.list_dir(os.path.join(self.absolute_path, 'conception'))
 
     def get_realisation_files(self):
@@ -81,7 +84,7 @@ class Project(object):
         self.current_ref = ref
 
 
-    def update_specifications(self):
+    def update_specification(self):
         """
         Update the specifications inside the json
         :return:
@@ -91,6 +94,17 @@ class Project(object):
             print "The specification files are empty, you cannot go further"
         else:
             self.current_ref.insert_use_cases(UsecaseParser.parse(files))
+
+    def update_conception(self):
+        """
+        Update the conception inside the json
+        :return:
+        """
+        files = self.get_conception_files()
+        if files == []:
+            print "The conception files are empty, you cannot go further"
+        else:
+            self.current_ref.insert_diag_concept(DiagParser.parse(files))
 
     def get_ref(self):
         return self.current_ref

@@ -8,21 +8,16 @@ import tkFileDialog
 
 class DiagParser():
 
-    def parse(self):
+    @classmethod
+    def parse(self, files_list):
         """
 
         :return: List of diagram names
         """
-        file_path_string = tkFileDialog.askopenfilename()
-        files = [file_path_string]
-
-        # Get only the files to parse, could be used for the project
-        # project_name = ""
-        # path = "\\AGL\\" + project_name + "\\Spec\\"
-        # files = os.listdir(path)
-        # for fil in files:
-        #     if not fil.endswith(".dia"):
-        #         files.remove(fil)
+        files = files_list
+        for fil in files:
+            if not fil.endswith(".dia"):
+                files.remove(fil)
 
         classes = []
 
