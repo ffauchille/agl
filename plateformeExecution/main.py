@@ -173,16 +173,31 @@ class RefTreeWidget(FloatLayout):
         NOTE: This method is called every seconds.
 
         :param dt: delta time required for the Clock.schedule_interval
+        :return: void
+        """
+        if AttributeContainer().current_project is not None:
+            project = AttributeContainer().current_project
+            # changed_x check if something changed, if so update the widget
+            changed_s = project.update_specification()
+            changed_c = project.update_conception()
+            # TODO : Need to update all the other parts of the referentiel (conception, realisation, ...)
+
+            if changed_c == 1 or changed_s == 1:
+                self.update_tree()
+
+    def first_update(self):
+        """
+        This method is called only "once"
         :return:
         """
         if AttributeContainer().current_project is not None:
             project = AttributeContainer().current_project
+            # changed_x check if something changed, if so update the widget
             project.update_specification()
             project.update_conception()
             # TODO : Need to update all the other parts of the referentiel (conception, realisation, ...)
 
             self.update_tree()
-
 
 class ScreenManagement(ScreenManager):
     pass

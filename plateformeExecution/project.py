@@ -92,8 +92,9 @@ class Project(object):
         files = self.get_specification_files()
         if files == []:
             print "The specification files are empty, you cannot go further"
+            return 0
         else:
-            self.current_ref.insert_use_cases(UsecaseParser.parse(files))
+            return self.current_ref.insert_use_cases(UsecaseParser.parse(files))
 
     def update_conception(self):
         """
@@ -103,8 +104,9 @@ class Project(object):
         files = self.get_conception_files()
         if files == []:
             print "The conception files are empty, you cannot go further"
+            return 0
         else:
-            self.current_ref.insert_diag_concept(DiagParser.parse(files))
+            return self.current_ref.insert_diag_concept(DiagParser.parse(files))
 
     def get_ref(self):
         return self.current_ref
