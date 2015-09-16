@@ -61,6 +61,26 @@ class Reference(object):
         :param uc_list: list of diagrams which have to be insert into the file
         :return: void
         """
+        ref = open(self.ref_path, 'r')
+        data = json.load(ref)
+        ref.close()
+
+        for dc in dc_list:
+            uc_name = dc[0]
+
+            for uc in data['children']:
+                if uc['name'] == uc_name:
+                    for dc_e in dc[1:]:
+                        if not any(d['name'] == dc_e for d in uc['children']):
+                            uc['children'].append({'name' : dc_e, 'type' : 'Diagram', 'children' : []})
+
+        ref = open(self.ref_path, 'w')
+        print data
+        json.dump(data, ref, sort_keys=True, indent=4, separators=(',', ': '))
+        ref.close()
+
+
+
         print dc_list
 
     def load_json(self):

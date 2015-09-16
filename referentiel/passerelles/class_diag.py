@@ -25,7 +25,7 @@ class DiagParser():
         path = "{0}layer/{0}object[@type='UML - Class']/{0}attribute[@name='name']/{0}string".format(dia)
         for fil in files:
             tree = etree.parse(fil)
-            classes.append(os.path.basename(fil)[:4])
+            classes.append(os.path.basename(fil)[:-4])
             for cla in tree.findall(path):
                 classes.append(cla.text[1:len(cla.text)-1])
             result.append(classes)
