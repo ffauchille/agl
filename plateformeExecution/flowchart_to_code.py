@@ -42,7 +42,7 @@ class FlowchartToCode():
             with open(fil, "r+") as f:
                 lines = f.readlines()
             for line in lines:
-                if line.find(" "+ array[0] + " ") != -1:
+                if line.find(" " + array[0] + " ") != -1:
                     i = 0
                     for ch in line:
                         if ch == "{":
@@ -51,7 +51,8 @@ class FlowchartToCode():
                         i += 1
                 body += line
             with open(fil, "w") as f:
-                f.write(body)
+                if body:
+                    f.write(body)
         return
 
 if __name__ == '__main__':

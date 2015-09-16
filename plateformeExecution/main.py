@@ -13,6 +13,8 @@ from singleton import Singleton
 from project import Project
 from program import Program
 from flowchart_to_code import FlowchartToCode
+from referentiel.passerelles.diatosql import JavaParserSQL
+
 
 class AttributeContainer(object):
     """
@@ -118,6 +120,11 @@ class MainScreen(Screen):
             project = AttributeContainer().current_project
             mergeScript.implement(project.get_realisation_files())
             print "program {} started".format('Merge script running...')
+
+    def launch_generateSQL(self):
+        diatosql = JavaParserSQL()
+        sql_file = diatosql.parse("")
+        print "Table generated in file : " + sql_file
 
 class RefTreeWidget(FloatLayout):
     """

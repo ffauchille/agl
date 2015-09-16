@@ -25,14 +25,14 @@ ScreenManagement:
                 text: 'Nom du projet : '
             TextInput:
                 id: project_name
-                text: "Nouveau projet"
+                text: "Nouveau_projet"
                 multiline: False
                 focus: True
                 padding: [50, ( self.height - self.line_height ) / 2]
 
         Button:
             on_release: app.root.current = 'other'
-            text: 'Créer projet'
+            text: 'Lancer projet'
             font_size: 20
             on_press: root.init_all(project_name.text)
 
@@ -76,6 +76,9 @@ ScreenManagement:
                     BottomButton:
                         text: "Fusionner le code"
                         on_press: root.launch_mergeScript()
+                    BottomButton:
+                        text: "Générer les tables SQL"
+                        on_press: root.launch_generateSQL()
             TabbedPanelItem:
                 text: "Réalisation"
                 BoxLayout:
