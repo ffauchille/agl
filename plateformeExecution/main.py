@@ -195,6 +195,7 @@ class RefTreeWidget(FloatLayout):
             # changed_x check if something changed, if so update the widget
             project.update_specification()
             project.update_conception()
+            project.update_realisation()
             # TODO : Need to update all the other parts of the referentiel (conception, realisation, ...)
 
             self.update_tree()
