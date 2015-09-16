@@ -34,6 +34,14 @@ class FlowchartToCode():
 
     def implement(self, files):
         array = self.parse()
+        try:
+            name = array[0].split("-")
+        except:
+            pass
+        if len(name) != 2:
+            print "Wrong file name"
+            return -1
+        class_meth = False
         for fil in files:
             if not fil.endswith(".java"):
                 files.remove(fil)
@@ -42,18 +50,22 @@ class FlowchartToCode():
             with open(fil, "r+") as f:
                 lines = f.readlines()
             for line in lines:
-                if line.find(" " + array[0] + " ") != -1:
+                if line.find(" " + name[0] + " ") != -1:
+                    class_meth = True
+                if line.find(" " + name[1] + " ") != -1 and class_meth:
                     i = 0
                     for ch in line:
                         if ch == "{":
                             line = line[:i+1] + array[1] + line[i+1:]
+                            class_meth = False
                             break
                         i += 1
                 body += line
             with open(fil, "w") as f:
                 if body:
                     f.write(body)
-        return
+            class_meth = False
+        return 0
 
 if __name__ == '__main__':
     jp = FlowchartToCode()
