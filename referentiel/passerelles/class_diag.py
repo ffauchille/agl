@@ -15,9 +15,13 @@ class DiagParser():
         :return: List of diagram names + file_name : [[f1,c1,c2],[f2,c1,c2,c3]
         """
         files = files_list
+        files2 = []
+        for fil in files:
+            files2.append(fil)
         for fil in files:
             if not fil.endswith(".dia"):
-                files.remove(fil)
+                files2.remove(fil)
+        files = files2
 
         classes = []
         result = []
