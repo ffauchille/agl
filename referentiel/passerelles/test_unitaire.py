@@ -14,9 +14,13 @@ class JunitParser():
             files = [file_path_string]
         else:
             files = path_value
+            files2 = []
+            for fil in files:
+                files2.append(fil)
             for fil in files:
                 if not fil.endswith(".java"):
-                    files.remove(fil)
+                    files2.remove(fil)
+            files = files2
 
         json = []
         data = []
