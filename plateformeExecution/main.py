@@ -139,6 +139,15 @@ class RefTreeWidget(FloatLayout):
         # FIXME The line below has to be uncommented after fixing the reference duplication BUG!
         Clock.schedule_interval(self.update_ref, 1 / 0.2)
 
+    def refresh_widget(self):
+        """
+        Refresh the referentiel layout
+        :return:
+        """
+        self.clear_widgets()
+        self.add_widget(self.tree_view)
+        print "widgets refreshed"
+
     def update_tree(self):
         """
         In order to refresh the layout, we remove the former widget
@@ -146,11 +155,6 @@ class RefTreeWidget(FloatLayout):
         We also parse all .dia files in other to get all new elements the user created
         :return: void
         """
-        try:
-            self.remove_widget(self.tree_view)
-        except WidgetException:
-            print "Error during the tree_view remove"
-            pass
 
         if AttributeContainer().current_project is not None:
             project = AttributeContainer().current_project
@@ -160,12 +164,9 @@ class RefTreeWidget(FloatLayout):
                 ref.load_json()
                 self.tree_view = ref.get_tree()
                 try:
-                    # we remove the referentiel TreeView Widget for *this* FloatLayout
-                    print self.tree_view
-                    self.add_widget(self.tree_view)
-                except WidgetException:
-                    print "Error during the tree_view add"
-                    pass
+                    self.refresh_widget()
+                except WidgetException as e:
+                    print "Error during the tree_view add: " + e.message
 
     def update_ref(self, dt = None):
         """

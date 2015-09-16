@@ -8,8 +8,7 @@ class Reference(object):
         Represent the reference document
     """
 
-    referentiel_tree = TreeView
-
+    referentiel_tree = None
     ref_path = ""
     project_name = ""
 
@@ -80,9 +79,6 @@ class Reference(object):
         ref.close()
 
 
-
-        print dc_list
-
     def load_json(self):
         """
         Load the ref.json on memory to make the print easier and improve the program speed
@@ -95,7 +91,6 @@ class Reference(object):
         Reference.populate_tree(self.referentiel_tree, None, data)
         return self.referentiel_tree
 
-
     def get_tree(self):
         return self.referentiel_tree
 
@@ -105,7 +100,7 @@ class Reference(object):
             if parent is None:
                 tree_node = tree_view.add_node(TreeViewLabel(text=node['name'], is_open=True))
             else:
-               tree_node = tree_view.add_node(TreeViewLabel(text=node['name'], is_open=True), parent)
+                tree_node = tree_view.add_node(TreeViewLabel(text=node['name'], is_open=True), parent)
             for child_node in node['children']:
                 Reference.populate_tree(tree_view, tree_node, child_node)
         except KeyError as e:
