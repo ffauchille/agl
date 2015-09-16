@@ -33,14 +33,16 @@ class FlowchartToCode():
         return array
 
     def implement(self, files):
-        # files = ["C:\\AGL\\Diagramme1.java"]
         array = self.parse()
+        for fil in files:
+            if not fil.endswith(".java"):
+                files.remove(fil)
         for fil in files:
             body = ""
             with open(fil, "r+") as f:
                 lines = f.readlines()
             for line in lines:
-                if line.find(array[0]) != -1:
+                if line.find(" "+ array[0] + " ") != -1:
                     i = 0
                     for ch in line:
                         if ch == "{":
