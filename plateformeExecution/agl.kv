@@ -104,6 +104,9 @@ ScreenManagement:
                         BottomButton:
                             text: "Lancer IntelliJ IDEA"
                             on_press: root.launch_intellij()
+                        BottomButton:
+                            text: "Rafraichir le réferentiel"
+                            on_press: refID.refresh_rea()
             TabbedPanelItem:
                 text: "Test"
                 GridLayout:
@@ -117,6 +120,9 @@ ScreenManagement:
                         BottomButton:
                             text: "Lancer IntelliJ IDEA"
                             on_press: root.launch_intellij()
+                        BottomButton:
+                            text: "Rafraichir le réferentiel"
+                            on_press: refID.refresh_test()
   
         RefTreeWidget:
             # NOTE: It's a FloatLayout

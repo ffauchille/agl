@@ -138,7 +138,7 @@ class RefTreeWidget(FloatLayout):
         super(RefTreeWidget, self).__init__(**kwargs)
         # update_tree will be call each 4 seconds
         # FIXME The line below has to be uncommented after fixing the reference duplication BUG!
-        Clock.schedule_interval(self.update_ref, 4)
+        Clock.schedule_interval(self.update_ref, 20)
 
     def refresh_widget(self):
         """
@@ -185,9 +185,14 @@ class RefTreeWidget(FloatLayout):
             changed_s = project.update_specification()
             changed_c = project.update_conception()
 
+            if changed_c == 1 or changed_s == 1:
+                print "Le referentiel a change"
+                self.update_tree()
+            else:
+                print "Rien n\'a change..."
+
             # TODO : Need to update all the other parts of the referentiel (conception, realisation, ...)
 
-            self.update_tree()
 
     def first_update(self):
         """
@@ -204,18 +209,29 @@ class RefTreeWidget(FloatLayout):
             realisation_thread.daemon = True
             realisation_thread.start()
 
-            tu_thread = threading.Thread(target=project.update_test_u, args=(self,))
+            tu_thread = threading.Thread(target=project.update_test_u, args=())
             tu_thread.daemon = True
             tu_thread.start()
-
-            # ti_thread = threading.Thread(target=project.update_test_i, args=())
-            # ti_thread.daemon = True
-            # ti_thread.start()
 
             # TODO : Need to update all the other parts of the referentiel (conception, realisation, ...)
 
             self.update_tree()
 
+    def refresh_rea(self):
+        if AttributeContainer().current_project is not None:
+            project = AttributeContainer().current_project
+            realisation_thread = threading.Thread(target=project.update_realisation, args=())
+            realisation_thread.daemon = True
+            realisation_thread.start()
+            self.update_tree()
+
+    def refresh_test(self):
+        if AttributeContainer().current_project is not None:
+            project = AttributeContainer().current_project
+            tu_thread = threading.Thread(target=project.update_test_u, args=())
+            tu_thread.daemon = True
+            tu_thread.start()
+            self.update_tree()
 
 class ScreenManagement(ScreenManager):
     pass
