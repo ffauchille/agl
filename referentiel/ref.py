@@ -52,7 +52,6 @@ class Reference(object):
 
         if change == 1:
             ref = open(self.ref_path, 'w')
-            print data
             json.dump(data, ref, sort_keys=True, indent=4, separators=(',', ': '))
             ref.close()
 
@@ -118,6 +117,36 @@ class Reference(object):
             ref.close()
 
         return change
+
+    def insert_test_u(self, u_list):
+        change = 0
+
+        ref = open(self.ref_path, 'r')
+        data = json.load(ref)
+        ref.close()
+
+        for u in u_list:
+            if len(u) <= 1:
+                pass
+            else:
+                t_name = u[0]
+                for u_u in u[1:]:
+                    m_name = u_u
+                    for uc in data['children']:
+                        for c in uc['children']:
+                            for m in c['children']:
+                                if m['name'] == m_name:
+                                    if not any(d['name'] == t_name for d in m['children']):
+                                        change = 1
+                                        m['children'].append({'name' : t_name, 'type' : 'Test unitaire', 'children' : []})
+
+        if change == 1:
+            ref = open(self.ref_path, 'w')
+            json.dump(data, ref, sort_keys=True, indent=4, separators=(',', ': '))
+            ref.close()
+
+        return change
+
 
 
     def load_json(self):

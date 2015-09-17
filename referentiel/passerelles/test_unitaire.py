@@ -34,12 +34,13 @@ class JunitParser():
                         data.append(method_decl.name)
                         for body in method_decl.body:
                             if body:
-                                self.recurse(body, data)
+                                JunitParser.recurse(body, data)
                         json.append(data)
                         data = []
         print json
         return json
 
+    @classmethod
     def recurse(self, ast, data):
         if ast:
             # print ast
@@ -53,7 +54,7 @@ class JunitParser():
                         if attr and str(attr)[0] == "[":
                             attr = m.VariableDeclarator(str(attr)[1:-1])
                         if attr and str(attr)[0] != "[":
-                            self.recurse(attr, data)
+                            JunitParser.recurse(attr, data)
 
         else:
             return data

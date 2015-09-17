@@ -130,13 +130,14 @@ class Project(object):
         else:
             return self.current_ref.insert_rea(JavaParser.parse(files))
 
-    def update_test_u(self):
+    def update_test_u(self, widget):
         files = self.get_test_u_files()
         if files == []:
             print "Le dossier de realisation est vide, impossible de continuer"
             return 0
         else:
-            print (JunitParser.parse(files))
+            self.current_ref.insert_test_u(JunitParser.parse(files))
+            widget.update_tree()
             return 0
 
     def get_ref(self):

@@ -184,13 +184,10 @@ class RefTreeWidget(FloatLayout):
             # changed_x check if something changed, if so update the widget
             changed_s = project.update_specification()
             changed_c = project.update_conception()
+
             # TODO : Need to update all the other parts of the referentiel (conception, realisation, ...)
 
-            if changed_c == 1 or changed_s == 1:
-                self.update_tree()
-                print "Le referentiel a ete modifie !"
-            else:
-                print "Pas de modification detectee.."
+            self.update_tree()
 
     def first_update(self):
         """
@@ -207,7 +204,7 @@ class RefTreeWidget(FloatLayout):
             realisation_thread.daemon = True
             realisation_thread.start()
 
-            tu_thread = threading.Thread(target=project.update_test_u, args=())
+            tu_thread = threading.Thread(target=project.update_test_u, args=(self,))
             tu_thread.daemon = True
             tu_thread.start()
 
