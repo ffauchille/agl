@@ -137,7 +137,7 @@ class RefTreeWidget(FloatLayout):
         super(RefTreeWidget, self).__init__(**kwargs)
         # update_tree will be call each second (1 times / 0.2 per second)
         # FIXME The line below has to be uncommented after fixing the reference duplication BUG!
-        Clock.schedule_interval(self.update_ref, 4)
+        Clock.schedule_interval(self.update_ref, 2)
 
     def refresh_widget(self):
         """
@@ -197,7 +197,7 @@ class RefTreeWidget(FloatLayout):
             # changed_x check if something changed, if so update the widget
             project.update_specification()
             project.update_conception()
-            #project.update_realisation()
+            project.update_realisation()
             # TODO : Need to update all the other parts of the referentiel (conception, realisation, ...)
 
             self.update_tree()

@@ -1,5 +1,5 @@
 import threading
-import plyj
+import plyj.parser as plyj
 
 
 class ThreadedFileParser(threading.Thread):
@@ -19,6 +19,6 @@ class ThreadedFileParser(threading.Thread):
     def run(self):
         parser = plyj.Parser()
         print "ThreadedFileParser: parsing file {} started.".format(self.fil)
-        _res = parser.parse_file(file(self.fil))
+        _res = parser.parse_file(self.fil)
         print "ThreadedFileParser: parsing file {} done.".format(self.fil)
         return _res
