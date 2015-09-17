@@ -26,7 +26,7 @@ class JunitParser():
         data = []
         for fil in files:
             parser = ThreadedFileParser(file(fil))
-            tree = parser.run()
+            tree = parser.start()
             if tree is not None:
                 for type_decl in tree.type_declarations:
                     for method_decl in [decl for decl in type_decl.body if type(decl) is m.MethodDeclaration]:

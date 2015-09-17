@@ -15,10 +15,9 @@ class ThreadedFileParser(threading.Thread):
     def __init__(self, fil):
         threading.Thread.__init__(self)
         self.fil = fil
+        self.daemon = True
 
     def run(self):
         parser = plyj.Parser()
-        print "ThreadedFileParser: parsing file {} started.".format(self.fil)
         _res = parser.parse_file(self.fil)
-        print "ThreadedFileParser: parsing file {} done.".format(self.fil)
         return _res
