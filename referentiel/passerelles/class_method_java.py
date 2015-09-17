@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-import threading
 
 import tkFileDialog
 import plyj.model as m
-from referentiel.passerelles.threaded_file_parser import ThreadedFileParser
+import plyj.parser as plyj
+
 
 class JavaParser():
 
@@ -28,8 +28,8 @@ class JavaParser():
         json = []
         data = []
         for fil in files:
-            parser = ThreadedFileParser(file(fil))
-            tree = parser.start()
+            parser = plyj.Parser()
+            tree = parser.parse_file(file(fil))
             if tree is not None:
                 for type_decl in tree.type_declarations:
                     data.append(type_decl.name)

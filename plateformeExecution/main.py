@@ -1,4 +1,5 @@
 import os
+import threading
 from kivy.uix.treeview import TreeView
 import psutil
 
@@ -201,8 +202,19 @@ class RefTreeWidget(FloatLayout):
             # changed_x check if something changed, if so update the widget
             project.update_specification()
             project.update_conception()
-            project.update_realisation()
-            project.update_test_u()
+
+            realisation_thread = threading.Thread(target=project.update_realisation, args=())
+            realisation_thread.daemon = True
+            realisation_thread.start()
+
+            tu_thread = threading.Thread(target=project.update_test_u, args=())
+            tu_thread.daemon = True
+            tu_thread.start()
+
+            # ti_thread = threading.Thread(target=project.update_test_i, args=())
+            # ti_thread.daemon = True
+            # ti_thread.start()
+
             # TODO : Need to update all the other parts of the referentiel (conception, realisation, ...)
 
             self.update_tree()

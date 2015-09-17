@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import plyj.parser as plyj
 import tkFileDialog
 import plyj.model as m
 from referentiel.passerelles.threaded_file_parser import ThreadedFileParser
@@ -25,8 +26,8 @@ class JunitParser():
         json = []
         data = []
         for fil in files:
-            parser = ThreadedFileParser(file(fil))
-            tree = parser.start()
+            parser = plyj.Parser()
+            tree = parser.parse_file(file(fil))
             if tree is not None:
                 for type_decl in tree.type_declarations:
                     for method_decl in [decl for decl in type_decl.body if type(decl) is m.MethodDeclaration]:
