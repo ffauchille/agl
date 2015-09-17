@@ -2,6 +2,7 @@ import os
 from referentiel.ref import Reference
 from referentiel.passerelles.use_case import UsecaseParser
 from referentiel.passerelles.class_diag import DiagParser
+from referentiel.passerelles.class_method_java import JavaParser
 
 class Project(object):
     """
@@ -72,6 +73,10 @@ class Project(object):
         return self.list_dir(os.path.join(self.absolute_path, 'conception'))
 
     def get_realisation_files(self):
+        """
+        List the content of this project's realisation
+        :return: the files which are inside the realisation folder
+        """
         return self.list_dir(os.path.join(self.absolute_path, 'realisation'))
 
     def get_test_files(self):
@@ -91,9 +96,10 @@ class Project(object):
         """
         files = self.get_specification_files()
         if files == []:
-            print "The specification files are empty, you cannot go further"
+            print "Le dossier de specification est vide, impossible de continuer"
+            return 0
         else:
-            self.current_ref.insert_use_cases(UsecaseParser.parse(files))
+            return self.current_ref.insert_use_cases(UsecaseParser.parse(files))
 
     def update_conception(self):
         """
@@ -102,9 +108,23 @@ class Project(object):
         """
         files = self.get_conception_files()
         if files == []:
-            print "The conception files are empty, you cannot go further"
+            print "Le dossier de conception est vide, impossible de continuer"
+            return 0
         else:
-            self.current_ref.insert_diag_concept(DiagParser.parse(files))
+            return self.current_ref.insert_diag_concept(DiagParser.parse(files))
+
+    def update_realisation(self):
+        """
+        Update the conception inside the json
+        :return:
+        """
+        files = self.get_realisation_files()
+        if files == []:
+            print "Le dossier de realisation est vide, impossible de continuer"
+            return 0
+        else:
+            return self.current_ref.insert_rea(JavaParser.parse(files))
 
     def get_ref(self):
         return self.current_ref
+

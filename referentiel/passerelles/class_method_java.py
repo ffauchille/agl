@@ -7,13 +7,16 @@ import plyj.model as m
 
 class JavaParser():
 
-    def parse(self, path_value):
-
-        if path_value == "":
+    @classmethod
+    def parse(self, files_list):
+        """
+        :return: List of diagram names + file_name : [[f1,c1,c2],[f2,c1,c2,c3]
+        """
+        if files_list == "":
             file_path_string = tkFileDialog.askopenfilename()
             files = [file_path_string]
         else:
-            files = path_value
+            files = files_list
             files2 = []
             for fil in files:
                 files2.append(fil)

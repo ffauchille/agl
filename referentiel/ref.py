@@ -36,50 +36,92 @@ class Reference(object):
         """
         Insert all use cases given in parameter inside the ref.json
         :param uc_list: list of use_case which have to be insert into the file
-        :return: void
+        :return: 1 if something changed, 0 if not
         """
+        change = 0
+
         ref = open(self.ref_path, 'r')
         data = json.load(ref)
         ref.close()
 
         for uc in uc_list:
             if not any(d['name'] == uc for d in data['children']):
+                change = 1
                 data['children'].append({'name' : uc, 'type' : 'Use-case', 'children' : []})
             else:
                 pass
 
-        ref = open(self.ref_path, 'w')
-        print "UC data printed : {}".format(data)
-        json.dump(data, ref, sort_keys=True, indent=4, separators=(',', ': '))
-        ref.close()
+        if change == 1:
+            ref = open(self.ref_path, 'w')
+            print data
+            json.dump(data, ref, sort_keys=True, indent=4, separators=(',', ': '))
+            ref.close()
 
-    def insert_diag_concept(self, dc_list):
+        return change
+
+
+
+    def insert_diag_concept(self, c_list):
         """
         Insert all design diagrams given in parameter inside the ref.json
         :param uc_list: list of diagrams which have to be insert into the file
-        :return: void
+        :return: 1 if something changed, 0 if not
         """
+        change = 0
+
         ref = open(self.ref_path, 'r')
         data = json.load(ref)
         ref.close()
 
-        for dc in dc_list:
+        for dc in c_list:
             uc_name = dc[0]
 
             for uc in data['children']:
                 if uc['name'] == uc_name:
                     for dc_e in dc[1:]:
                         if not any(d['name'] == dc_e for d in uc['children']):
-                            uc['children'].append({'name' : dc_e, 'type' : 'Diagram', 'children' : []})
+                            change = 1
+                            uc['children'].append({'name' : dc_e, 'type' : 'Class', 'children' : []})
 
-        ref = open(self.ref_path, 'w')
-        print "CD data printed : {}".format(data)
-        json.dump(data, ref, sort_keys=True, indent=4, separators=(',', ': '))
+        if change == 1:
+            ref = open(self.ref_path, 'w')
+            print data
+            json.dump(data, ref, sort_keys=True, indent=4, separators=(',', ': '))
+            ref.close()
+
+        return change
+
+    def insert_rea(self, m_list):
+        """
+        Insert all methods given in parameter inside the ref.json
+        :param uc_list: list of diagrams which have to be insert into the file
+        :return: 1 if something changed, 0 if not
+        """
+        change = 0
+
+        ref = open(self.ref_path, 'r')
+        data = json.load(ref)
         ref.close()
 
+        for dc in m_list:
+            c_name = dc[0]
 
+            for uc in data['children']:
+                for c in uc['children']:
+                    if c['name'] == c_name:
+                        for dc_e in dc[1:]:
+                            if not any(d['name'] == dc_e for d in c['children']):
+                                change = 1
+                                c['children'].append({'name' : dc_e, 'type' : 'Method', 'children' : []})
 
-        print dc_list
+        if change == 1:
+            ref = open(self.ref_path, 'w')
+            print data
+            json.dump(data, ref, sort_keys=True, indent=4, separators=(',', ': '))
+            ref.close()
+
+        return change
+
 
     def load_json(self):
         """

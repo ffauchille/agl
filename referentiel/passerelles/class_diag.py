@@ -11,7 +11,6 @@ class DiagParser():
     @classmethod
     def parse(self, files_list):
         """
-
         :return: List of diagram names + file_name : [[f1,c1,c2],[f2,c1,c2,c3]
         """
         files = files_list
