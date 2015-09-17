@@ -3,7 +3,7 @@ from kivy.uix.treeview import TreeView
 import psutil
 
 from kivy.app import App
-from kivy.properties import ObjectProperty, DictProperty, Clock
+from kivy.properties import ObjectProperty, Clock
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.widget import WidgetException
 from kivy.lang import Builder
@@ -135,9 +135,9 @@ class RefTreeWidget(FloatLayout):
 
     def __init__(self, **kwargs):
         super(RefTreeWidget, self).__init__(**kwargs)
-        # update_tree will be call each second (1 times / 0.2 per second)
+        # update_tree will be call each 4 seconds
         # FIXME The line below has to be uncommented after fixing the reference duplication BUG!
-        Clock.schedule_interval(self.update_ref, 2)
+        Clock.schedule_interval(self.update_ref, 4)
 
     def refresh_widget(self):
         """
@@ -187,6 +187,9 @@ class RefTreeWidget(FloatLayout):
 
             if changed_c == 1 or changed_s == 1:
                 self.update_tree()
+                print "Le referentiel a ete modifie !"
+            else:
+                print "Pas de modification detectee.."
 
     def first_update(self):
         """

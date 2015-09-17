@@ -38,7 +38,6 @@ class JavaParser():
                         data.append(method_decl.name)
                     json.append(data)
                     data = []
-                print json
         return json
 
 if __name__ == '__main__':

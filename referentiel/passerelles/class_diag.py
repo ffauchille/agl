@@ -33,7 +33,6 @@ class DiagParser():
                 classes.append(cla.text[1:len(cla.text)-1])
             result.append(classes)
             classes = []
-        print result
         return result
         # usecases contains the name of the usecase that will be given to the json
 

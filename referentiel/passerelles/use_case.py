@@ -28,5 +28,4 @@ class UsecaseParser():
             tree = etree.parse(fil)
             for diag in tree.findall(path):
                 usecases.append(diag.text[1:len(diag.text)-1])
-        print usecases
         return usecases

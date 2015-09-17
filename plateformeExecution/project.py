@@ -15,7 +15,8 @@ class Project(object):
                   'specification',
                   'conception',
                   'realisation',
-                  'test', ]
+                  'test_unitaires',
+                  'test_fonctionnels']
 
     def __init__(self, **kwargs):
         self.name = kwargs.get('project_name', "New project")
