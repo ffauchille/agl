@@ -13,7 +13,6 @@ class Reference(object):
     project_name = ""
 
     def __init__(self, absolute_path="", project_name="New project"):
-        # self.ref_path = os.path.join(absolute_path, 'referentiel', project_name + '.ref.json')
         # STUB : example's ref.json
         self.ref_path = os.path.join(absolute_path, 'referentiel', project_name + '.ref.json')
 
@@ -85,7 +84,6 @@ class Reference(object):
 
         if change == 1:
             ref = open(self.ref_path, 'w')
-            print data
             json.dump(data, ref, sort_keys=True, indent=4, separators=(',', ': '))
             ref.close()
 
@@ -116,7 +114,6 @@ class Reference(object):
 
         if change == 1:
             ref = open(self.ref_path, 'w')
-            print data
             json.dump(data, ref, sort_keys=True, indent=4, separators=(',', ': '))
             ref.close()
 

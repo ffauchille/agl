@@ -2,7 +2,6 @@
 import threading
 
 import tkFileDialog
-import plyj.parser as plyj
 import plyj.model as m
 from referentiel.passerelles.threaded_file_parser import ThreadedFileParser
 
@@ -38,9 +37,4 @@ class JavaParser():
                         data.append(method_decl.name)
                     json.append(data)
                     data = []
-                print json
         return json
-
-if __name__ == '__main__':
-    jp = JavaParser()
-    JavaParser.parse(jp, "")

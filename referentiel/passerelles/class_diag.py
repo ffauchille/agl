@@ -2,10 +2,6 @@
 import os
 import xml.etree.cElementTree as etree
 
-# Placeholder method to test the script with a dia file
-import tkFileDialog
-
-
 class DiagParser():
 
     @classmethod
@@ -33,10 +29,4 @@ class DiagParser():
                 classes.append(cla.text[1:len(cla.text)-1])
             result.append(classes)
             classes = []
-        print result
         return result
-        # usecases contains the name of the usecase that will be given to the json
-
-if __name__ == '__main__':
-    dp = DiagParser()
-    DiagParser.parse(dp)
