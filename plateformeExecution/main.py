@@ -203,12 +203,6 @@ class RefTreeWidget(FloatLayout):
 
             self.update_tree()
 
-    def load_ref(self):
-        if AttributeContainer().current_project is not None:
-            project = AttributeContainer().current_project
-            if AttributeContainer().current_project.current_ref is not None:
-                ref = project.get_ref()
-                ref.load_json()
 
 class ScreenManagement(ScreenManager):
     pass

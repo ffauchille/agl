@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import threading
 
 import tkFileDialog
 import plyj.parser as plyj
@@ -29,7 +30,7 @@ class JavaParser():
         data = []
         for fil in files:
             parser = ThreadedFileParser(file(fil))
-            tree = parser.run()
+            tree = parser.start()
             if tree is not None:
                 for type_decl in tree.type_declarations:
                     data.append(type_decl.name)
