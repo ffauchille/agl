@@ -3,6 +3,7 @@ from referentiel.ref import Reference
 from referentiel.passerelles.use_case import UsecaseParser
 from referentiel.passerelles.class_diag import DiagParser
 from referentiel.passerelles.class_method_java import JavaParser
+from referentiel.passerelles.test_unitaire import JunitParser
 
 class Project(object):
     """
@@ -15,8 +16,8 @@ class Project(object):
                   'specification',
                   'conception',
                   'realisation',
-                  'test_unitaires',
-                  'test_fonctionnels']
+                  'test_unitaire',
+                  'test_fonctionnel']
 
     def __init__(self, **kwargs):
         self.name = kwargs.get('project_name', "New project")
@@ -80,8 +81,11 @@ class Project(object):
         """
         return self.list_dir(os.path.join(self.absolute_path, 'realisation'))
 
-    def get_test_files(self):
-        return self.list_dir(os.path.join(self.absolute_path, 'test'))
+    def get_test_u_files(self):
+        return self.list_dir(os.path.join(self.absolute_path, 'test_unitaire'))
+
+    def get_test_f_files(self):
+        return self.list_dir(os.path.join(self.absolute_path, 'test_fonctionnel'))
 
     def get_referentiel_files(self):
         return self.list_dir(os.path.join(self.absolute_path, 'referentiel'))
@@ -126,6 +130,16 @@ class Project(object):
         else:
             return self.current_ref.insert_rea(JavaParser.parse(files))
 
+    def update_test_u(self):
+        files = self.get_test_u_files()
+        if files == []:
+            print "Le dossier de realisation est vide, impossible de continuer"
+            return 0
+        else:
+            print (JunitParser.parse(files))
+            return 0
+
     def get_ref(self):
         return self.current_ref
+
 

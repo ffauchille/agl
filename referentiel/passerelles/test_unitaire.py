@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 
 import tkFileDialog
-import plyj.parser as plyj
 import plyj.model as m
 from referentiel.passerelles.threaded_file_parser import ThreadedFileParser
 
 class JunitParser():
 
-    def parse(self, path_value):
+    @classmethod
+    def parse(self, files_list):
 
-        if path_value == "":
+        if files_list == "":
             file_path_string = tkFileDialog.askopenfilename()
             files = [file_path_string]
         else:
-            files = path_value
+            files = files_list
             files2 = []
             for fil in files:
                 files2.append(fil)

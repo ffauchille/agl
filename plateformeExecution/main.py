@@ -202,6 +202,7 @@ class RefTreeWidget(FloatLayout):
             project.update_specification()
             project.update_conception()
             project.update_realisation()
+            project.update_test_u()
             # TODO : Need to update all the other parts of the referentiel (conception, realisation, ...)
 
             self.update_tree()

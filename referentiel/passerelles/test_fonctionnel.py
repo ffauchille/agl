@@ -8,6 +8,7 @@ from referentiel.passerelles.threaded_file_parser import ThreadedFileParser
 
 class JavaParser():
 
+    @classmethod
     def parse(self, path_value):
 
         if path_value == "":
