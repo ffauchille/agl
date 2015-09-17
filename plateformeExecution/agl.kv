@@ -93,18 +93,30 @@ ScreenManagement:
                             on_press: root.launch_generateSQL()
             TabbedPanelItem:
                 text: "Réalisation"
-                BoxLayout:
-                    orientation: "horizontal"
-                    BottomButton:
-                        text: "Lancer IntelliJ IDEA"
-                        on_press: root.launch_intellij()
+                GridLayout:
+                    cols: 1
+                    rows: 2
+
+                    Label:
+                        text: '1. Lancer IntelliJ\n2. Créer un nouveau projet dans le dossier actuel\n3. Compléter votre projet'
+                    BoxLayout:
+                        orientation: "horizontal"
+                        BottomButton:
+                            text: "Lancer IntelliJ IDEA"
+                            on_press: root.launch_intellij()
             TabbedPanelItem:
                 text: "Test"
-                BoxLayout:
-                    orientation: "horizontal"
-                    BottomButton:
-                        text: "Lancer IntelliJ IDEA"
-                        on_press: root.launch_intellij()
+                GridLayout:
+                    cols: 1
+                    rows: 2
+
+                    Label:
+                        text: '1. Lancer Intellij\n2. Créer un fichier par classe pour les tests unitaires\n3. Créer un fichier par cas d\'utilisation pour les tests fonctionnels'
+                    BoxLayout:
+                        orientation: "horizontal"
+                        BottomButton:
+                            text: "Lancer IntelliJ IDEA"
+                            on_press: root.launch_intellij()
   
         RefTreeWidget:
             # NOTE: It's a FloatLayout
