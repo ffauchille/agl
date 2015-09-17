@@ -8,7 +8,7 @@ class Reference(object):
         Represent the reference document
     """
 
-    referentiel_tree = None
+    referentiel_tree = TreeView(hide_root=True)
     ref_path = ""
     project_name = ""
 
@@ -18,7 +18,6 @@ class Reference(object):
         self.ref_path = os.path.join(absolute_path, 'referentiel', project_name + '.ref.json')
 
         self.project_name = project_name
-        self.referentiel_tree = TreeView(hide_root=True)
         if os.path.isfile(self.ref_path):
             self.load_json()
         else:
@@ -50,7 +49,7 @@ class Reference(object):
                 pass
 
         ref = open(self.ref_path, 'w')
-        print data
+        print "UC data printed : {}".format(data)
         json.dump(data, ref, sort_keys=True, indent=4, separators=(',', ': '))
         ref.close()
 
@@ -74,24 +73,28 @@ class Reference(object):
                             uc['children'].append({'name' : dc_e, 'type' : 'Diagram', 'children' : []})
 
         ref = open(self.ref_path, 'w')
-        print data
+        print "CD data printed : {}".format(data)
         json.dump(data, ref, sort_keys=True, indent=4, separators=(',', ': '))
         ref.close()
 
+
+
+        print dc_list
 
     def load_json(self):
         """
         Load the ref.json on memory to make the print easier and improve the program speed
         :return:
         """
-        self.referentiel_tree = TreeView(hide_root=True)
+        #self.referentiel_tree = TreeView(hide_root=True)
         ref = open(self.ref_path, 'r')
         data = json.load(ref)
         ref.close()
         Reference.populate_tree(self.referentiel_tree, None, data)
         return self.referentiel_tree
 
-    def get_tree(self):
+
+    def get_ref_tree(self):
         return self.referentiel_tree
 
     @classmethod
