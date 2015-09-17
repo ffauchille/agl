@@ -3,6 +3,8 @@
 import tkFileDialog
 import plyj.parser as plyj
 import os
+from referentiel.passerelles.threaded_file_parser import ThreadedFileParser
+
 
 class JavaParser():
 
@@ -25,8 +27,8 @@ class JavaParser():
         json = []
 
         for fil in files:
-            parser = plyj.Parser()
-            tree = parser.parse_file(file(fil))
+            parser = ThreadedFileParser(file(fil))
+            tree = parser.run()
             if tree is not None:
                 classes.append(os.path.basename(fil)[:-5])
                 for type_decl in tree.type_declarations:
