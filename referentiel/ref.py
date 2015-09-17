@@ -29,7 +29,7 @@ class Reference(object):
         :return: void
         """
         ref = open(self.ref_path, 'a+')
-        json.dump({"name" : self.project_name, "children" : []}, ref, sort_keys=True, indent=4, separators=(',', ': '))
+        json.dump({"type" : "Projet", "name" : self.project_name, "children" : []}, ref, sort_keys=True, indent=4, separators=(',', ': '))
         ref.close()
 
     def insert_use_cases(self, uc_list):
@@ -47,7 +47,7 @@ class Reference(object):
         for uc in uc_list:
             if not any(d['name'] == uc for d in data['children']):
                 change = 1
-                data['children'].append({'name' : uc, 'type' : 'Use-case', 'children' : []})
+                data['children'].append({'name' : uc, 'type' : 'Cas d\'utilisation', 'children' : []})
             else:
                 pass
 
@@ -81,7 +81,7 @@ class Reference(object):
                     for dc_e in dc[1:]:
                         if not any(d['name'] == dc_e for d in uc['children']):
                             change = 1
-                            uc['children'].append({'name' : dc_e, 'type' : 'Class', 'children' : []})
+                            uc['children'].append({'name' : dc_e, 'type' : 'Classe', 'children' : []})
 
         if change == 1:
             ref = open(self.ref_path, 'w')
@@ -112,7 +112,7 @@ class Reference(object):
                         for dc_e in dc[1:]:
                             if not any(d['name'] == dc_e for d in c['children']):
                                 change = 1
-                                c['children'].append({'name' : dc_e, 'type' : 'Method', 'children' : []})
+                                c['children'].append({'name' : dc_e, 'type' : 'Methode', 'children' : []})
 
         if change == 1:
             ref = open(self.ref_path, 'w')
@@ -144,9 +144,9 @@ class Reference(object):
     def populate_tree(cls, tree_view, parent, node):
         try:
             if parent is None:
-                tree_node = tree_view.add_node(TreeViewLabel(text=node['name'], is_open=True))
+                tree_node = tree_view.add_node(TreeViewLabel(text=node['type'] + " : " + node['name'], is_open=True))
             else:
-                tree_node = tree_view.add_node(TreeViewLabel(text=node['name'], is_open=True), parent)
+                tree_node = tree_view.add_node(TreeViewLabel(text=node['type'] + " : " + node['name'], is_open=True), parent)
             for child_node in node['children']:
                 Reference.populate_tree(tree_view, tree_node, child_node)
         except KeyError as e:
