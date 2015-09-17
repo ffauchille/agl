@@ -27,14 +27,15 @@ class JunitParser():
         for fil in files:
             parser = plyj.Parser()
             tree = parser.parse_file(file(fil))
-            for type_decl in tree.type_declarations:
-                for method_decl in [decl for decl in type_decl.body if type(decl) is m.MethodDeclaration]:
-                    data.append(method_decl.name)
-                    for body in method_decl.body:
-                        if body:
-                            self.recurse(body, data)
-                    json.append(data)
-                    data = []
+            if tree is not None:
+                for type_decl in tree.type_declarations:
+                    for method_decl in [decl for decl in type_decl.body if type(decl) is m.MethodDeclaration]:
+                        data.append(method_decl.name)
+                        for body in method_decl.body:
+                            if body:
+                                self.recurse(body, data)
+                        json.append(data)
+                        data = []
         print json
         return json
 

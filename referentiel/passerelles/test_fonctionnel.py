@@ -27,11 +27,12 @@ class JavaParser():
         for fil in files:
             parser = plyj.Parser()
             tree = parser.parse_file(file(fil))
-            classes.append(os.path.basename(fil)[:-5])
-            for type_decl in tree.type_declarations:
-                classes.append(type_decl.name)
-            json.append(classes)
-            classes = []
+            if tree is not None:
+                classes.append(os.path.basename(fil)[:-5])
+                for type_decl in tree.type_declarations:
+                    classes.append(type_decl.name)
+                json.append(classes)
+                classes = []
         print json
         return json
 
