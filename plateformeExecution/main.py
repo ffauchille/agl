@@ -165,6 +165,7 @@ class RefTreeWidget(FloatLayout):
                 try:
                     self.clear_widgets()
                     ref = project.get_ref()
+                    ref.load_json()
                     self.tree_view = ref.get_ref_tree()
                     self.add_widget(self.tree_view)
                 except WidgetException as e:
@@ -201,6 +202,13 @@ class RefTreeWidget(FloatLayout):
             # TODO : Need to update all the other parts of the referentiel (conception, realisation, ...)
 
             self.update_tree()
+
+    def load_ref(self):
+        if AttributeContainer().current_project is not None:
+            project = AttributeContainer().current_project
+            if AttributeContainer().current_project.current_ref is not None:
+                ref = project.get_ref()
+                ref.load_json()
 
 class ScreenManagement(ScreenManager):
     pass

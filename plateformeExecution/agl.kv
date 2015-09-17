@@ -64,9 +64,11 @@ ScreenManagement:
 
                     Label:
                         text: '1. Lancer DIA\n2. Enregistrer le fichier dans le dossier de specification en decochant "compress diagram files"'
-                    BottomButton:
-                        text: "Lancer DIA"
-                        on_press: root.launch_dia()
+                    BoxLayout:
+                        orientation: "horizontal"
+                        BottomButton:
+                            text: "Lancer DIA"
+                            on_press: root.launch_dia()
             TabbedPanelItem:
                 text: "Conception"
                 GridLayout:

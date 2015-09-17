@@ -128,10 +128,11 @@ class Reference(object):
         Load the ref.json on memory to make the print easier and improve the program speed
         :return:
         """
-        #self.referentiel_tree = TreeView(hide_root=True)
         ref = open(self.ref_path, 'r')
         data = json.load(ref)
         ref.close()
+        if not self.referentiel_tree.root.is_leaf:
+            self.referentiel_tree.remove_node(self.referentiel_tree.root.nodes[0])
         Reference.populate_tree(self.referentiel_tree, None, data)
         return self.referentiel_tree
 
