@@ -4,6 +4,7 @@ from referentiel.passerelles.use_case import UsecaseParser
 from referentiel.passerelles.class_diag import DiagParser
 from referentiel.passerelles.class_method_java import JavaParser
 from referentiel.passerelles.test_unitaire import JunitParser
+from referentiel.passerelles.test_fonctionnel import JavaParser
 
 class Project(object):
     """
@@ -133,11 +134,21 @@ class Project(object):
     def update_test_u(self):
         files = self.get_test_u_files()
         if files == []:
-            print "Le dossier de realisation est vide, impossible de continuer"
+            print "Le dossier de test unitaire est vide, impossible de continuer"
             return 0
         else:
             self.current_ref.insert_test_u(JunitParser.parse(files))
             return 0
+
+    def update_test_f(self):
+        files = self.get_test_f_files()
+        if files == []:
+            print "Le dossier de test fonctionnel est vide, impossible de continuer"
+            return 0
+        else:
+            self.current_ref.insert_test_f(JavaParser.parse(files))
+            return 0
+
 
     def get_ref(self):
         return self.current_ref

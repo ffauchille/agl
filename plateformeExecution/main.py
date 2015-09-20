@@ -228,9 +228,15 @@ class RefTreeWidget(FloatLayout):
     def refresh_test(self):
         if AttributeContainer().current_project is not None:
             project = AttributeContainer().current_project
+            #unit_tests
             tu_thread = threading.Thread(target=project.update_test_u, args=())
             tu_thread.daemon = True
             tu_thread.start()
+
+            #functional tests
+            tf_thread = threading.Thread(target=project.update_test_f, args=())
+            tf_thread.daemon = True
+            tf_thread.start()
             self.update_tree()
 
 class ScreenManagement(ScreenManager):

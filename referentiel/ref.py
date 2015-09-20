@@ -147,7 +147,29 @@ class Reference(object):
 
         return change
 
+    def insert_test_f(self, t_list):
+        change = 0
 
+        ref = open(self.ref_path, 'r')
+        data = json.load(ref)
+        ref.close()
+
+        for dc in t_list:
+            tf_name = dc[0]
+
+            for uc in data['children']:
+                if uc['name'] == tf_name:
+                    for dc_e in dc[1:]:
+                        if not any(d['name'] == dc_e for d in uc['children']):
+                            change = 1
+                            uc['children'].append({'name' : dc_e, 'type' : 'Test fonctionnel', 'children' : []})
+
+        if change == 1:
+            ref = open(self.ref_path, 'w')
+            json.dump(data, ref, sort_keys=True, indent=4, separators=(',', ': '))
+            ref.close()
+
+        return change
 
     def load_json(self):
         """
