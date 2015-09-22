@@ -1,6 +1,8 @@
 # agl
 
-# additionnal packages
+# 
+
+# additionnal python packages
 kivy
 psutil
 plyj
